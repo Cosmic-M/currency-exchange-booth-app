@@ -1,0 +1,9 @@
+databaseChangeLog:
+  - include:
+      file: db/changelog/changes/create-currency-table.sql
+  - include:
+      file: db/changelog/changes/create-bid-table.sql
+  - include:
+      file: db/changelog/changes/add-currency.sql
+  - include:
+      file: db/changelog/changes/add-bids.sql

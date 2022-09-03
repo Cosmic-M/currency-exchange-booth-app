@@ -11,7 +11,7 @@ public class CurrencyMapper {
     public Currency toModel(ApiCurrencyDto currencyDto) {
         Currency currency = new Currency();
         currency.setCcy(currencyDto.getCcy());
-        currency.setBaseSsy(currencyDto.getBase_ccy());
+        currency.setBaseCcy(currencyDto.getBase_ccy());
         currency.setSale(currencyDto.getSale());
         currency.setBuy(currencyDto.getBuy());
         currency.setDateTime(LocalDateTime.now());
@@ -22,7 +22,7 @@ public class CurrencyMapper {
         CurrencyResponseDto responseDto = new CurrencyResponseDto();
         responseDto.setId(currency.getId());
         responseDto.setCcy(currency.getCcy());
-        responseDto.setBaseSsy(currency.getBaseSsy());
+        responseDto.setBaseSsy(currency.getBaseCcy());
         responseDto.setSale(currency.getSale());
         responseDto.setBuy(currency.getBuy());
         responseDto.setDateTime(currency.getDateTime());
