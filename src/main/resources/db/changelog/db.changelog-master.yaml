@@ -4,6 +4,8 @@ databaseChangeLog:
   - include:
       file: db/changelog/changes/create-bid-table.sql
   - include:
+      file: db/changelog/changes/create-bid_id_password-table.sql
+  - include:
       file: db/changelog/changes/add-currency.sql
   - include:
       file: db/changelog/changes/add-bids.sql
