@@ -1,15 +1,20 @@
 package developing.springboot.currencyexchangeboothapp.model;
 
-import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 
 @Setter
 @Getter
 @Entity
-@Table(name ="currency")
+@Table(name = "currency")
 public class Currency {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

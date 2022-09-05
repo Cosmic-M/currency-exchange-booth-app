@@ -1,17 +1,16 @@
 package developing.springboot.currencyexchangeboothapp.service.mapper;
 
-import developing.springboot.currencyexchangeboothapp.dto.BidRequestDto;
-import developing.springboot.currencyexchangeboothapp.dto.BidResponseDto;
-import developing.springboot.currencyexchangeboothapp.model.Bid;
+import developing.springboot.currencyexchangeboothapp.dto.DealRequestDto;
+import developing.springboot.currencyexchangeboothapp.dto.DealResponseDto;
+import developing.springboot.currencyexchangeboothapp.model.Deal;
 import developing.springboot.currencyexchangeboothapp.model.Status;
+import java.time.LocalDateTime;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDateTime;
-
 @Component
-public class BidMapper {
-    public Bid toModel(BidRequestDto requestDto) {
-        Bid bid = new Bid();
+public class DealMapper {
+    public Deal toModel(DealRequestDto requestDto) {
+        Deal bid = new Deal();
         bid.setCcyBuy(requestDto.getCcyBuy());
         bid.setCcySale(requestDto.getCcySale());
         bid.setCcySaleAmount(requestDto.getCcySaleAmount());
@@ -21,8 +20,8 @@ public class BidMapper {
         return bid;
     }
 
-    public BidResponseDto toDto(Bid bid) {
-        BidResponseDto responseDto = new BidResponseDto();
+    public DealResponseDto toDto(Deal bid) {
+        DealResponseDto responseDto = new DealResponseDto();
         responseDto.setId(bid.getId());
         responseDto.setCcySale(bid.getCcySale());
         responseDto.setCcyBuy(bid.getCcyBuy());

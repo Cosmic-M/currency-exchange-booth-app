@@ -2,10 +2,10 @@ databaseChangeLog:
   - include:
       file: db/changelog/changes/create-currency-table.sql
   - include:
-      file: db/changelog/changes/create-bid-table.sql
+      file: db/changelog/changes/create-deal-table.sql
   - include:
-      file: db/changelog/changes/create-bid_id_password-table.sql
+      file: db/changelog/changes/create-otp_password-table.sql
   - include:
       file: db/changelog/changes/add-currency.sql
   - include:
-      file: db/changelog/changes/add-bids.sql
+      file: db/changelog/changes/add-deals.sql

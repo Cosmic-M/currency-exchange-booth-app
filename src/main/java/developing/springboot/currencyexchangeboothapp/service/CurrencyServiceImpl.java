@@ -30,7 +30,7 @@ public class CurrencyServiceImpl implements CurrencyService {
 
     @Override
     public List<Currency> saveCurrentCurrencyQuotesToDB() {
-        log.info("saveAll was invoked at " + LocalDateTime.now() + "link: "+ apiLink);
+        log.info("saveAll was invoked at " + LocalDateTime.now() + "link: " + apiLink);
         ApiCurrencyDto[] currencyDto = httpClient.get(apiLink, ApiCurrencyDto[].class);
         List<Currency> currencyList = Arrays.stream(currencyDto)
                 .map(currencyMapper::toModel)
