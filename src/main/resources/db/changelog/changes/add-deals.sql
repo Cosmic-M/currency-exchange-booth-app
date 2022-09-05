@@ -22,3 +22,13 @@ INSERT INTO deal (ccy_sale, ccy_buy, ccy_sale_amount, ccy_buy_amount, phone, dat
 VALUES ('USD', 'UAH',  1500, 59925, '(097) 225-21-05', '2022-09-02 11:32:20.350', 'PERFORMED');
 INSERT INTO deal (ccy_sale, ccy_buy, ccy_sale_amount, ccy_buy_amount, phone, date_time, status)
 VALUES ('USD', 'UAH',  400, 15980, '(066) 210-14-01', '2022-09-02 11:59:21.350', 'PERFORMED');
+INSERT INTO deal (ccy_sale, ccy_buy, ccy_sale_amount, ccy_buy_amount, phone, date_time, status)
+VALUES ('EUR', 'UAH',  1000, 40450, '(050) 132-45-81', '2022-09-05 08:15:20.750', 'PERFORMED');
+INSERT INTO deal (ccy_sale, ccy_buy, ccy_sale_amount, ccy_buy_amount, phone, date_time, status)
+VALUES ('USD', 'UAH',  400, 15980, '(066) 210-00-01', '2022-09-05 10:20:21.350', 'PERFORMED');
+INSERT INTO deal (ccy_sale, ccy_buy, ccy_sale_amount, ccy_buy_amount, phone, date_time, status)
+VALUES ('USD', 'UAH',  200, 7990, '(068) 210-00-05', '2022-09-05 10:20:21.350', 'PERFORMED');
+INSERT INTO deal (ccy_sale, ccy_buy, ccy_sale_amount, ccy_buy_amount, phone, date_time, status)
+VALUES ('EUR', 'UAH',  500, 20225, '(050) 130-45-80', '2022-09-05 10:15:20.750', 'PERFORMED');
+INSERT INTO deal (ccy_sale, ccy_buy, ccy_sale_amount, ccy_buy_amount, phone, date_time, status)
+VALUES ('EUR', 'UAH',  100, 4045, '(063) 130-80-80', '2022-09-05 10:15:20.750', 'PERFORMED');
