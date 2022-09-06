@@ -1,8 +1,8 @@
 package developing.springboot.currencyexchangeboothapp.controller;
 
-import developing.springboot.currencyexchangeboothapp.dto.DealPasswordRequest;
 import developing.springboot.currencyexchangeboothapp.dto.DealRequestDto;
 import developing.springboot.currencyexchangeboothapp.dto.DealResponseDto;
+import developing.springboot.currencyexchangeboothapp.dto.PasswordRequestDto;
 import developing.springboot.currencyexchangeboothapp.model.Deal;
 import developing.springboot.currencyexchangeboothapp.model.OtpPassword;
 import developing.springboot.currencyexchangeboothapp.model.Status;
@@ -31,8 +31,8 @@ public class DealController {
     }
 
     @PostMapping("/confirm")
-    public String confirmBid(@RequestBody DealPasswordRequest passwordRequest) {
-        OtpPassword otpPassword = otpPasswordMapper.toModel(passwordRequest);
+    public String confirmBid(@RequestBody PasswordRequestDto passwordRequestDto) {
+        OtpPassword otpPassword = otpPasswordMapper.toModel(passwordRequestDto);
         Deal deal = otpPasswordService.passwordValidation(otpPassword);
         return deal.getStatus() == Status.PERFORMED ? "password is correct" : "wrong password";
     }

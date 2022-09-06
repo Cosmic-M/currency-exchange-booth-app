@@ -10,7 +10,7 @@ import lombok.Setter;
 public class CurrencyResponseDto {
     private Long id;
     private String ccy;
-    private String baseSsy;
+    private String baseCcy;
     private BigDecimal buy;
     private BigDecimal sale;
     private LocalDateTime dateTime;

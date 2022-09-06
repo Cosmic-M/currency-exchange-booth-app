@@ -22,7 +22,7 @@ public class CurrencyMapper {
         CurrencyResponseDto responseDto = new CurrencyResponseDto();
         responseDto.setId(currency.getId());
         responseDto.setCcy(currency.getCcy());
-        responseDto.setBaseSsy(currency.getBaseCcy());
+        responseDto.setBaseCcy(currency.getBaseCcy());
         responseDto.setSale(currency.getSale());
         responseDto.setBuy(currency.getBuy());
         responseDto.setDateTime(currency.getDateTime());
