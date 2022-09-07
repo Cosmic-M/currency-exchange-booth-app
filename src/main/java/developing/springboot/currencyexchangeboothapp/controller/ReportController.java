@@ -4,10 +4,10 @@ import developing.springboot.currencyexchangeboothapp.dto.DealResponseDto;
 import developing.springboot.currencyexchangeboothapp.dto.ReportResponse;
 import developing.springboot.currencyexchangeboothapp.model.Deal;
 import developing.springboot.currencyexchangeboothapp.service.DealService;
-import java.time.LocalDate;
-import java.util.List;
 import developing.springboot.currencyexchangeboothapp.service.mapper.DealMapper;
 import developing.springboot.currencyexchangeboothapp.util.DateTimePatternUtil;
+import java.time.LocalDate;
+import java.util.List;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -32,8 +32,10 @@ public class ReportController {
 
     @GetMapping("/ccy-period")
     public List<DealResponseDto> getDeals(@RequestParam String ccySale,
-                                          @RequestParam @DateTimeFormat(pattern = DateTimePatternUtil.DATE_PATTERN) LocalDate from,
-                                          @RequestParam @DateTimeFormat(pattern = DateTimePatternUtil.DATE_PATTERN) LocalDate to) {
+                                          @RequestParam @DateTimeFormat(pattern =
+                                                  DateTimePatternUtil.DATE_PATTERN) LocalDate from,
+                                          @RequestParam @DateTimeFormat(pattern =
+                                                  DateTimePatternUtil.DATE_PATTERN) LocalDate to) {
         List<Deal> deals = dealService.findAllByCcyAndPeriod(ccySale, from, to);
         return deals.stream()
                 .map(dealMapper::toDto)

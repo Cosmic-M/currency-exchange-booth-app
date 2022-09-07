@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS currency (
+CREATE TABLE IF NOT EXISTS exchange_rate (
     id bigint auto_increment,
     ccy varchar(255) NOT NULL,
     base_ccy varchar(255) NOT NULL,
@@ -8,4 +8,4 @@ CREATE TABLE IF NOT EXISTS currency (
     CONSTRAINT currency_pk PRIMARY KEY (id)
     );
 
---rollback DROP TABLE currency;
+--rollback DROP TABLE exchange_rate;

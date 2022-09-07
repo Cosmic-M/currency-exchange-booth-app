@@ -4,15 +4,14 @@ import developing.springboot.currencyexchangeboothapp.dto.DealRequestDto;
 import developing.springboot.currencyexchangeboothapp.dto.DealResponseDto;
 import developing.springboot.currencyexchangeboothapp.model.Deal;
 import developing.springboot.currencyexchangeboothapp.model.Status;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
-
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
 
 @ExtendWith(MockitoExtension.class)
 class DealMapperTest {

@@ -7,7 +7,7 @@ import lombok.Setter;
 
 @Setter
 @Getter
-public class CurrencyResponseDto {
+public class ExchangeRateResponseDto {
     private Long id;
     private String ccy;
     private String baseCcy;

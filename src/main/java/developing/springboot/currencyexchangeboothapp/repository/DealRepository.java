@@ -10,7 +10,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-
 @Repository
 public interface DealRepository extends JpaRepository<Deal, Long> {
     @Query("FROM Deal d where d.id = ?1")
@@ -21,10 +20,12 @@ public interface DealRepository extends JpaRepository<Deal, Long> {
     @Query("DELETE FROM Deal d where d.phone = ?1 AND d.status = 'NEW'")
     void deleteBy(String phone);
 
-    @Query(value = "SELECT d.ccy_sale as ccySale, d.ccy_buy as ccyBuy, COUNT(d.id) as dealsCount, SUM(d.ccy_sale_amount) as totalCcySale "
+    @Query(value = "SELECT d.ccy_sale as ccySale, d.ccy_buy as ccyBuy, COUNT(d.id) as dealsCount, "
+            + "SUM(d.ccy_sale_amount) as totalCcySale "
             + "FROM deal d "
             + "WHERE d.date_time > CURRENT_DATE AND d.status = 'PERFORMED' "
-            + "GROUP BY ccySale, ccyBuy", nativeQuery = true)
+            + "GROUP BY ccySale, ccyBuy "
+            + "ORDER BY dealsCount ASC ", nativeQuery = true)
     List<ReportResponse> getDealsPerDay();
 
     @Query("FROM Deal d WHERE d.ccySale = ?1 AND d.dateTime BETWEEN ?2 AND ?3")

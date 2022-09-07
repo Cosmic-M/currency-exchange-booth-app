@@ -6,7 +6,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class ApiCurrencyDto {
+public class ApiExchangeRateDto {
     private String ccy;
     private String base_ccy;
     private BigDecimal buy;
