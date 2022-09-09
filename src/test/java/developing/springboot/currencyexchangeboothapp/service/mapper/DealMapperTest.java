@@ -40,15 +40,8 @@ class DealMapperTest {
         dealRequestDto.setPhone("(050) 505-50-05");
 
         DealResponseDto dealResponseDto = new DealResponseDto();
-        dealResponseDto.setId(10L);
-        dealResponseDto.setCcySale("EUR");
-        dealResponseDto.setCcyBuy("UAH");
-        dealResponseDto.setCcySaleAmount(BigDecimal.valueOf(500));
         dealResponseDto.setCcyBuyAmount(BigDecimal.valueOf(20200));
-        dealResponseDto.setDateTime(LocalDateTime
-                .of(2022, 9, 6, 12, 30, 15, 0));
         dealResponseDto.setPhone("(050) 505-50-05");
-        dealResponseDto.setStatus(Status.PERFORMED);
     }
 
     @Test
@@ -63,15 +56,7 @@ class DealMapperTest {
     @Test
     void mapToDto_ok() {
         DealResponseDto result = dealMapper.toDto(deal);
-        Assertions.assertEquals(10L, result.getId());
-        Assertions.assertEquals("EUR", result.getCcySale());
-        Assertions.assertEquals("UAH", result.getCcyBuy());
-        Assertions.assertEquals(BigDecimal.valueOf(500), result.getCcySaleAmount());
         Assertions.assertEquals(BigDecimal.valueOf(20200), result.getCcyBuyAmount());
-        Assertions.assertEquals(LocalDateTime
-                .of(2022, 9, 6, 12, 30, 15, 0),
-                result.getDateTime());
         Assertions.assertEquals("(050) 505-50-05", result.getPhone());
-        Assertions.assertEquals(Status.PERFORMED, result.getStatus());
     }
 }

@@ -5,4 +5,6 @@ import developing.springboot.currencyexchangeboothapp.model.OtpPassword;
 
 public interface OtpPasswordService {
     Deal passwordValidation(OtpPassword bidIdPassword);
+
+    OtpPassword create(Deal deal);
 }

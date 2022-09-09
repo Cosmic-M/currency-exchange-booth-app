@@ -1,7 +1,14 @@
 package developing.springboot.currencyexchangeboothapp.controller;
 
+import developing.springboot.currencyexchangeboothapp.dto.PasswordRequestDto;
+import developing.springboot.currencyexchangeboothapp.model.Deal;
 import developing.springboot.currencyexchangeboothapp.model.ExchangeRate;
+import developing.springboot.currencyexchangeboothapp.model.OtpPassword;
+import developing.springboot.currencyexchangeboothapp.model.Status;
 import developing.springboot.currencyexchangeboothapp.service.ExchangeRateService;
+import developing.springboot.currencyexchangeboothapp.service.OtpPasswordService;
+import developing.springboot.currencyexchangeboothapp.service.mapper.OtpPasswordMapper;
+import io.restassured.http.ContentType;
 import io.restassured.module.mockmvc.RestAssuredMockMvc;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -38,16 +45,16 @@ class ExchangeRateControllerTest {
         usd.setId(1L);
         usd.setCcy("USD");
         usd.setBaseCcy("UAH");
-        usd.setBuy(new BigDecimal("39.400000"));
-        usd.setSale(new BigDecimal("39.900000"));
+        usd.setBuy(BigDecimal.valueOf(39.4));
+        usd.setSale(BigDecimal.valueOf(39.9));
         usd.setDateTime(LocalDateTime.now());
 
         ExchangeRate eur = new ExchangeRate();
         eur.setId(2L);
         eur.setCcy("EUR");
         eur.setBaseCcy("UAH");
-        eur.setBuy(new BigDecimal("39.500000"));
-        eur.setSale(new BigDecimal("40.400000"));
+        eur.setBuy(BigDecimal.valueOf(39.5));
+        eur.setSale(BigDecimal.valueOf(40.4));
         eur.setDateTime(LocalDateTime.now());
 
         List<ExchangeRate> mockExchangeRateList = List.of(usd, eur);
@@ -66,15 +73,11 @@ class ExchangeRateControllerTest {
                 .body("[0].id", Matchers.equalTo(1))
                 .body("[0].ccy", Matchers.equalTo("USD"))
                 .body("[0].baseCcy", Matchers.equalTo("UAH"))
-//                .body("[0].buy", Matchers.equalTo(BigDecimal.valueOf(39.400000)))
-//                .body("[0].sale", Matchers.equalTo(BigDecimal.valueOf(39.900000)))
                 .body("[0].buy", Matchers.equalTo(39.4F))
                 .body("[0].sale", Matchers.equalTo(39.9F))
                 .body("[1].id", Matchers.equalTo(2))
                 .body("[1].ccy", Matchers.equalTo("EUR"))
                 .body("[1].baseCcy", Matchers.equalTo("UAH"))
-//                .body("[1].buy", Matchers.equalTo(BigDecimal.valueOf(39.500000)))
-//                .body("[1].sale", Matchers.equalTo(BigDecimal.valueOf(40.400000)));
                 .body("[1].buy", Matchers.equalTo(39.5F))
                 .body("[1].sale", Matchers.equalTo(40.4F));
     }

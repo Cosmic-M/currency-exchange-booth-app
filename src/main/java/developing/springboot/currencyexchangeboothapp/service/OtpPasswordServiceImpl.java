@@ -10,20 +10,37 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 
+import java.util.Random;
+
 @Service
 @RequiredArgsConstructor
 public class OtpPasswordServiceImpl implements OtpPasswordService {
-    @NonNull private OtpPasswordRepository bidIdPasswordRepository;
-    @NonNull private DealRepository bidRepository;
+    @NonNull private OtpPasswordRepository otpPasswordRepository;
+    @NonNull private DealRepository dealRepository;
 
     @Override
-    public Deal passwordValidation(OtpPassword bidIdPassword) {
-        boolean isPresent = bidIdPasswordRepository.exists(Example.of(bidIdPassword));
-        Deal bid = bidRepository.findCoincidenceById(bidIdPassword.getId());
-        bidIdPasswordRepository.delete(bidIdPassword);
+    public Deal passwordValidation(OtpPassword otpPassword) {
+        boolean isPresent = otpPasswordRepository.exists(Example.of(otpPassword));
+        Deal deal = dealRepository.findCoincidenceById(otpPassword.getId());
+        otpPasswordRepository.delete(otpPassword);
         Status status = isPresent ? Status.PERFORMED : Status.CANCELED;
-        bid.setStatus(status);
-        bidRepository.save(bid);
-        return bid;
+        deal.setStatus(status);
+        dealRepository.save(deal);
+        return deal;
+    }
+
+    @Override
+    public OtpPassword create(Deal deal) {
+        OtpPassword otpPassword = new OtpPassword();
+        otpPassword.setId(deal.getId());
+        otpPassword.setPassword(getPassword());
+        otpPasswordRepository.save(otpPassword);
+        return otpPassword;
+    }
+
+    private String getPassword() {
+        Random random = new Random();
+        int intValue = random.nextInt(999999);
+        return String.format("%06d", intValue);
     }
 }

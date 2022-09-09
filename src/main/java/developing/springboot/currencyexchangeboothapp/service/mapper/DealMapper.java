@@ -22,14 +22,8 @@ public class DealMapper {
 
     public DealResponseDto toDto(Deal bid) {
         DealResponseDto responseDto = new DealResponseDto();
-        responseDto.setId(bid.getId());
-        responseDto.setCcySale(bid.getCcySale());
-        responseDto.setCcyBuy(bid.getCcyBuy());
-        responseDto.setCcySaleAmount(bid.getCcySaleAmount());
         responseDto.setCcyBuyAmount(bid.getCcyBuyAmount());
         responseDto.setPhone(bid.getPhone());
-        responseDto.setDateTime(bid.getDateTime());
-        responseDto.setStatus(bid.getStatus());
         return responseDto;
     }
 }
