@@ -1,9 +1,8 @@
 package developing.springboot.currencyexchangeboothapp.dto;
 
+import developing.springboot.currencyexchangeboothapp.model.Status;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-
-import developing.springboot.currencyexchangeboothapp.model.Status;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;

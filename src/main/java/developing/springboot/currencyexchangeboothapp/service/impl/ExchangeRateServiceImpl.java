@@ -44,7 +44,10 @@ public class ExchangeRateServiceImpl implements ExchangeRateService {
         List<ExchangeRate> listToSave = new ArrayList<>();
         for (ExchangeRate er : newestExchangeRateList) {
             ExchangeRate exchangeRateFromDb = exchangeRateRepository
-                    .getByCcyAndBaseCcyAndDateTimeBetween(er.getCcy(), er.getBaseCcy(), today.atStartOfDay(), today.atTime(LocalTime.MAX));
+                    .getByCcyAndBaseCcyAndDateTimeBetween(er.getCcy(),
+                            er.getBaseCcy(),
+                            today.atStartOfDay(),
+                            today.atTime(LocalTime.MAX));
             if (exchangeRateFromDb != null) {
                 exchangeRateFromDb.setSale(er.getSale());
                 exchangeRateFromDb.setBuy(er.getBuy());

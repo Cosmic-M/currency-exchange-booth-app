@@ -43,8 +43,14 @@ public class DealServiceImpl implements DealService {
     }
 
     @Override
-    public List<Deal> findAllByCcyAndPeriod(String ccy, LocalDate from, LocalDate to, PageRequest pageRequest) {
+    public List<Deal> findAllByCcyAndPeriod(String ccy,
+                                            LocalDate from,
+                                            LocalDate to,
+                                            PageRequest pageRequest) {
         return dealRepository
-                .findAllByCcyAndPeriod(ccy, from.atStartOfDay(), to.atTime(LocalTime.MAX), pageRequest);
+                .findAllByCcyAndPeriod(ccy,
+                        from.atStartOfDay(),
+                        to.atTime(LocalTime.MAX),
+                        pageRequest);
     }
 }

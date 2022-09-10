@@ -3,7 +3,6 @@ package developing.springboot.currencyexchangeboothapp.dto;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
-
 import java.math.BigDecimal;
 
 @Getter

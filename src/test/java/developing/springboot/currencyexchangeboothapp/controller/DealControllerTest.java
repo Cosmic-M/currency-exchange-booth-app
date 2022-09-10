@@ -1,6 +1,10 @@
 package developing.springboot.currencyexchangeboothapp.controller;
 
-import developing.springboot.currencyexchangeboothapp.dto.*;
+import developing.springboot.currencyexchangeboothapp.dto.BuyAmountResponseDto;
+import developing.springboot.currencyexchangeboothapp.dto.DealResponseDto;
+import developing.springboot.currencyexchangeboothapp.dto.DealRequestDto;
+import developing.springboot.currencyexchangeboothapp.dto.DealStatusResponseDto;
+import developing.springboot.currencyexchangeboothapp.dto.PasswordRequestDto;
 import developing.springboot.currencyexchangeboothapp.model.Deal;
 import developing.springboot.currencyexchangeboothapp.model.OtpPassword;
 import developing.springboot.currencyexchangeboothapp.model.Status;
@@ -130,9 +134,5 @@ class DealControllerTest {
                 .then()
                 .statusCode(200)
                 .body("message", Matchers.equalTo("Deal confirmed: Status.PERFORMED"));
-    }
-
-    @Test
-    void delete() {
     }
 }

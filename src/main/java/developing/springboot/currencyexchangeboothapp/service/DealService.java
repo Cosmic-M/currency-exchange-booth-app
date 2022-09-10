@@ -2,10 +2,9 @@ package developing.springboot.currencyexchangeboothapp.service;
 
 import developing.springboot.currencyexchangeboothapp.dto.ReportResponse;
 import developing.springboot.currencyexchangeboothapp.model.Deal;
-import org.springframework.data.domain.PageRequest;
-
 import java.time.LocalDate;
 import java.util.List;
+import org.springframework.data.domain.PageRequest;
 
 public interface DealService {
     Deal create(Deal deal);

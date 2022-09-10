@@ -2,13 +2,14 @@ package developing.springboot.currencyexchangeboothapp.controller;
 
 import developing.springboot.currencyexchangeboothapp.dto.DealResponseDto;
 import developing.springboot.currencyexchangeboothapp.dto.ReportResponse;
+import developing.springboot.currencyexchangeboothapp.dto.ReportResponseDto;
 import developing.springboot.currencyexchangeboothapp.model.Deal;
 import developing.springboot.currencyexchangeboothapp.service.DealService;
+import developing.springboot.currencyexchangeboothapp.service.ReportResponseParser;
 import developing.springboot.currencyexchangeboothapp.service.mapper.DealMapper;
 import developing.springboot.currencyexchangeboothapp.util.DateTimePatternUtil;
 import java.time.LocalDate;
 import java.util.List;
-
 import developing.springboot.currencyexchangeboothapp.util.SortDealsUtil;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -31,9 +32,14 @@ public class ReportController {
     @NonNull
     private DealMapper dealMapper;
 
+    @NonNull private ReportResponseParser reportResponseParser;
+
     @GetMapping("/report")
-    public List<ReportResponse> doReport() {
-        return dealService.doReport();
+    public List<ReportResponseDto> doReport() {
+        List<ReportResponse> reportResponseList = dealService.doReport();
+        return reportResponseList.stream()
+                .map(reportResponseParser::toDto)
+                .toList();
     }
 
     @ApiOperation(value = "get deal's list")
@@ -53,7 +59,8 @@ public class ReportController {
                                           @ApiParam(value = "default value is id")
                                           String sortBy) {
         Sort sort = SortDealsUtil.getSortingDeals(sortBy);
-        List<Deal> deals = dealService.findAllByCcyAndPeriod(ccySale, from, to, PageRequest.of(page, count, sort));
+        List<Deal> deals = dealService
+                .findAllByCcyAndPeriod(ccySale, from, to, PageRequest.of(page, count, sort));
         return deals.stream()
                 .map(dealMapper::toDto)
                 .toList();

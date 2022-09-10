@@ -1,11 +1,13 @@
 package developing.springboot.currencyexchangeboothapp.dto;
 
-import java.math.BigDecimal;
-
 import developing.springboot.currencyexchangeboothapp.lib.ValidPhoneNumber;
-import lombok.*;
-
+import java.math.BigDecimal;
 import javax.validation.constraints.Min;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
 @Setter

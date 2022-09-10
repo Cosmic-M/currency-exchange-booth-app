@@ -1,14 +1,17 @@
 package developing.springboot.currencyexchangeboothapp.controller;
 
-import developing.springboot.currencyexchangeboothapp.dto.*;
+import developing.springboot.currencyexchangeboothapp.dto.BuyAmountResponseDto;
+import developing.springboot.currencyexchangeboothapp.dto.DealRequestDto;
+import developing.springboot.currencyexchangeboothapp.dto.DealStatusResponseDto;
+import developing.springboot.currencyexchangeboothapp.dto.PasswordRequestDto;
 import developing.springboot.currencyexchangeboothapp.service.SmsSender;
 import developing.springboot.currencyexchangeboothapp.model.Deal;
 import developing.springboot.currencyexchangeboothapp.model.OtpPassword;
-import developing.springboot.currencyexchangeboothapp.model.Status;
 import developing.springboot.currencyexchangeboothapp.service.DealService;
 import developing.springboot.currencyexchangeboothapp.service.OtpPasswordService;
 import developing.springboot.currencyexchangeboothapp.service.mapper.DealMapper;
 import developing.springboot.currencyexchangeboothapp.service.mapper.OtpPasswordMapper;
+import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,8 +19,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import javax.validation.Valid;
 
 @RestController
 @RequiredArgsConstructor

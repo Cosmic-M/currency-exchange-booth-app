@@ -95,17 +95,26 @@ class ExchangeRateServiceImplTest {
         Mockito.when(exchangeRateRepository
                 .getByCcyAndBaseCcyAndDateTimeBetween("EUR", "UAH", today.atStartOfDay(),
                         today.atTime(LocalTime.MAX))).thenReturn(null);
-        Mockito.when(exchangeRateRepository.saveAll(newestExchangeRateList)).thenReturn(newestExchangeRateList);
+        Mockito.when(exchangeRateRepository
+                .saveAll(newestExchangeRateList)).thenReturn(newestExchangeRateList);
 
-        Assertions.assertEquals("USD", exchangeRateService.updateLastExchangeRates(newestExchangeRateList).get(0).getCcy());
-        Assertions.assertEquals("UAH", exchangeRateService.updateLastExchangeRates(newestExchangeRateList).get(0).getBaseCcy());
-        Assertions.assertEquals(BigDecimal.valueOf(12.50), exchangeRateService.updateLastExchangeRates(newestExchangeRateList).get(0).getSale());
-        Assertions.assertEquals(BigDecimal.valueOf(12.25), exchangeRateService.updateLastExchangeRates(newestExchangeRateList).get(0).getBuy());
+        Assertions.assertEquals("USD", exchangeRateService
+                .updateLastExchangeRates(newestExchangeRateList).get(0).getCcy());
+        Assertions.assertEquals("UAH", exchangeRateService
+                .updateLastExchangeRates(newestExchangeRateList).get(0).getBaseCcy());
+        Assertions.assertEquals(BigDecimal.valueOf(12.50), exchangeRateService
+                .updateLastExchangeRates(newestExchangeRateList).get(0).getSale());
+        Assertions.assertEquals(BigDecimal.valueOf(12.25), exchangeRateService
+                .updateLastExchangeRates(newestExchangeRateList).get(0).getBuy());
 
-        Assertions.assertEquals("EUR", exchangeRateService.updateLastExchangeRates(newestExchangeRateList).get(1).getCcy());
-        Assertions.assertEquals("UAH", exchangeRateService.updateLastExchangeRates(newestExchangeRateList).get(1).getBaseCcy());
-        Assertions.assertEquals(BigDecimal.valueOf(14.9), exchangeRateService.updateLastExchangeRates(newestExchangeRateList).get(1).getSale());
-        Assertions.assertEquals(BigDecimal.valueOf(14.5), exchangeRateService.updateLastExchangeRates(newestExchangeRateList).get(1).getBuy());
+        Assertions.assertEquals("EUR", exchangeRateService
+                .updateLastExchangeRates(newestExchangeRateList).get(1).getCcy());
+        Assertions.assertEquals("UAH", exchangeRateService
+                .updateLastExchangeRates(newestExchangeRateList).get(1).getBaseCcy());
+        Assertions.assertEquals(BigDecimal.valueOf(14.9), exchangeRateService
+                .updateLastExchangeRates(newestExchangeRateList).get(1).getSale());
+        Assertions.assertEquals(BigDecimal.valueOf(14.5), exchangeRateService
+                .updateLastExchangeRates(newestExchangeRateList).get(1).getBuy());
     }
 
     @Test
@@ -117,16 +126,25 @@ class ExchangeRateServiceImplTest {
         Mockito.when(exchangeRateRepository
                 .getByCcyAndBaseCcyAndDateTimeBetween("EUR", "UAH", today.atStartOfDay(),
                         today.atTime(LocalTime.MAX))).thenReturn(todayExchangeRateList.get(1));
-        Mockito.when(exchangeRateRepository.saveAll(newestExchangeRateList)).thenReturn(newestExchangeRateList);
+        Mockito.when(exchangeRateRepository
+                .saveAll(newestExchangeRateList)).thenReturn(newestExchangeRateList);
 
-        Assertions.assertEquals("USD", exchangeRateService.updateLastExchangeRates(newestExchangeRateList).get(0).getCcy());
-        Assertions.assertEquals("UAH", exchangeRateService.updateLastExchangeRates(newestExchangeRateList).get(0).getBaseCcy());
-        Assertions.assertEquals(BigDecimal.valueOf(12.50), exchangeRateService.updateLastExchangeRates(newestExchangeRateList).get(0).getSale());
-        Assertions.assertEquals(BigDecimal.valueOf(12.25), exchangeRateService.updateLastExchangeRates(newestExchangeRateList).get(0).getBuy());
+        Assertions.assertEquals("USD", exchangeRateService
+                .updateLastExchangeRates(newestExchangeRateList).get(0).getCcy());
+        Assertions.assertEquals("UAH", exchangeRateService
+                .updateLastExchangeRates(newestExchangeRateList).get(0).getBaseCcy());
+        Assertions.assertEquals(BigDecimal.valueOf(12.50), exchangeRateService
+                .updateLastExchangeRates(newestExchangeRateList).get(0).getSale());
+        Assertions.assertEquals(BigDecimal.valueOf(12.25), exchangeRateService
+                .updateLastExchangeRates(newestExchangeRateList).get(0).getBuy());
 
-        Assertions.assertEquals("EUR", exchangeRateService.updateLastExchangeRates(newestExchangeRateList).get(1).getCcy());
-        Assertions.assertEquals("UAH", exchangeRateService.updateLastExchangeRates(newestExchangeRateList).get(1).getBaseCcy());
-        Assertions.assertEquals(BigDecimal.valueOf(14.9), exchangeRateService.updateLastExchangeRates(newestExchangeRateList).get(1).getSale());
-        Assertions.assertEquals(BigDecimal.valueOf(14.5), exchangeRateService.updateLastExchangeRates(newestExchangeRateList).get(1).getBuy());
+        Assertions.assertEquals("EUR", exchangeRateService
+                .updateLastExchangeRates(newestExchangeRateList).get(1).getCcy());
+        Assertions.assertEquals("UAH", exchangeRateService
+                .updateLastExchangeRates(newestExchangeRateList).get(1).getBaseCcy());
+        Assertions.assertEquals(BigDecimal.valueOf(14.9), exchangeRateService
+                .updateLastExchangeRates(newestExchangeRateList).get(1).getSale());
+        Assertions.assertEquals(BigDecimal.valueOf(14.5), exchangeRateService
+                .updateLastExchangeRates(newestExchangeRateList).get(1).getBuy());
     }
 }
