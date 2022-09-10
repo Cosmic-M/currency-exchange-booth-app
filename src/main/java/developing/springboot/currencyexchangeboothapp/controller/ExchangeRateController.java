@@ -19,8 +19,7 @@ public class ExchangeRateController {
 
     @GetMapping("/open-work-day")
     public List<ExchangeRateResponseDto> openWorkDay() {
-        List<ExchangeRate> exchangeRateList = exchangeRateService.getExchangeRate();
-        exchangeRateList = exchangeRateService.save(exchangeRateList);
+        List<ExchangeRate> exchangeRateList = exchangeRateService.syncExchangeRate();
         return exchangeRateList.stream().map(exchangeRateMapper::toDto).toList();
     }
 }

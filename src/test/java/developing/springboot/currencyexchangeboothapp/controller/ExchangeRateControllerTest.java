@@ -52,8 +52,7 @@ class ExchangeRateControllerTest {
 
         List<ExchangeRate> mockExchangeRateList = List.of(usd, eur);
 
-        Mockito.when(exchangeRateService.getExchangeRate()).thenReturn(mockExchangeRateList);
-        Mockito.when(exchangeRateService.save(mockExchangeRateList)).thenReturn(mockExchangeRateList);
+        Mockito.when(exchangeRateService.syncExchangeRate()).thenReturn(mockExchangeRateList);
 
         RestAssuredMockMvc.when()
                 .get("/exchange-rate/open-work-day")

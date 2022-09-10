@@ -6,14 +6,14 @@ import developing.springboot.currencyexchangeboothapp.repository.ExchangeRateRep
 import developing.springboot.currencyexchangeboothapp.service.ExchangeRateService;
 import developing.springboot.currencyexchangeboothapp.service.HttpClient;
 import developing.springboot.currencyexchangeboothapp.service.mapper.ExchangeRateMapper;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-@Log4j2
 @Service
 public class ExchangeRateServiceImpl implements ExchangeRateService {
     private final ExchangeRateMapper exchangeRateMapper;
@@ -31,16 +31,29 @@ public class ExchangeRateServiceImpl implements ExchangeRateService {
     }
 
     @Override
-    public List<ExchangeRate> getExchangeRate() {
-        log.info("saveAll was invoked at " + LocalDateTime.now() + "link: " + apiLink);
+    public List<ExchangeRate> syncExchangeRate() {
         ApiExchangeRateDto[] exchangeRateDto = httpClient.get(apiLink, ApiExchangeRateDto[].class);
-        return Arrays.stream(exchangeRateDto)
+        List<ExchangeRate> newestExchangeRateList = Arrays.stream(exchangeRateDto)
                 .map(exchangeRateMapper::toModel)
                 .toList();
+        return updateLastExchangeRates(newestExchangeRateList);
     }
 
-    @Override
-    public List<ExchangeRate> save(List<ExchangeRate> exchangeRateList) {
-        return exchangeRateRepository.saveAll(exchangeRateList);
+    public List<ExchangeRate> updateLastExchangeRates(List<ExchangeRate> newestExchangeRateList) {
+        LocalDate today = LocalDate.now();
+        List<ExchangeRate> listToSave = new ArrayList<>();
+        for (ExchangeRate er : newestExchangeRateList) {
+            ExchangeRate exchangeRateFromDb = exchangeRateRepository
+                    .getByCcyAndBaseCcyAndDateTimeBetween(er.getCcy(), er.getBaseCcy(), today.atStartOfDay(), today.atTime(LocalTime.MAX));
+            if (exchangeRateFromDb != null) {
+                exchangeRateFromDb.setSale(er.getSale());
+                exchangeRateFromDb.setBuy(er.getBuy());
+                exchangeRateFromDb.setDateTime(er.getDateTime());
+                listToSave.add(exchangeRateFromDb);
+            } else {
+                listToSave.add(er);
+            }
+        }
+        return exchangeRateRepository.saveAll(listToSave);
     }
 }
