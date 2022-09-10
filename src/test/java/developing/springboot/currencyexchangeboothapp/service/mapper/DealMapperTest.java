@@ -1,7 +1,9 @@
 package developing.springboot.currencyexchangeboothapp.service.mapper;
 
+import developing.springboot.currencyexchangeboothapp.dto.BuyAmountResponseDto;
 import developing.springboot.currencyexchangeboothapp.dto.DealRequestDto;
 import developing.springboot.currencyexchangeboothapp.dto.DealResponseDto;
+import developing.springboot.currencyexchangeboothapp.dto.DealStatusResponseDto;
 import developing.springboot.currencyexchangeboothapp.model.Deal;
 import developing.springboot.currencyexchangeboothapp.model.Status;
 import java.math.BigDecimal;
@@ -56,7 +58,33 @@ class DealMapperTest {
     @Test
     void mapToDto_ok() {
         DealResponseDto result = dealMapper.toDto(deal);
+        Assertions.assertEquals("EUR", result.getCcySale());
+        Assertions.assertEquals("UAH", result.getCcyBuy());
+        Assertions.assertEquals(BigDecimal.valueOf(500), result.getCcySaleAmount());
         Assertions.assertEquals(BigDecimal.valueOf(20200), result.getCcyBuyAmount());
         Assertions.assertEquals("(050) 505-50-05", result.getPhone());
+        Assertions.assertEquals(LocalDateTime
+                .of(2022, 9, 6, 12, 30, 15, 0), deal.getDateTime());
+        Assertions.assertEquals(Status.PERFORMED, deal.getStatus());
+    }
+
+    @Test
+    void toBuyAmountDto_ok() {
+        BuyAmountResponseDto result = dealMapper.toBuyAmountDto(deal);
+        Assertions.assertEquals(BigDecimal.valueOf(20200), result.getCcyBuyAmount());
+        Assertions.assertEquals("(050) 505-50-05", result.getPhone());
+    }
+
+    @Test
+    void toDealStatusDto_statusConfirmed_ok() {
+        DealStatusResponseDto result = dealMapper.toDealStatusDto(deal);
+        Assertions.assertEquals("Deal confirmed: Status.PERFORMED", result.getMessage());
+    }
+
+    @Test
+    void toDealStatusDto_statusCanceled_ok() {
+        deal.setStatus(Status.CANCELED);
+        DealStatusResponseDto result = dealMapper.toDealStatusDto(deal);
+        Assertions.assertEquals("Wrong password: Status.CANCELED", result.getMessage());
     }
 }

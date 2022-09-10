@@ -1,4 +1,4 @@
-package developing.springboot.currencyexchangeboothapp.service;
+package developing.springboot.currencyexchangeboothapp.service.impl;
 
 import developing.springboot.currencyexchangeboothapp.dto.ReportResponse;
 import developing.springboot.currencyexchangeboothapp.model.Deal;
@@ -8,8 +8,11 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
+
+import developing.springboot.currencyexchangeboothapp.service.DealService;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -40,8 +43,8 @@ public class DealServiceImpl implements DealService {
     }
 
     @Override
-    public List<Deal> findAllByCcyAndPeriod(String ccy, LocalDate from, LocalDate to) {
+    public List<Deal> findAllByCcyAndPeriod(String ccy, LocalDate from, LocalDate to, PageRequest pageRequest) {
         return dealRepository
-                .findAllByCcyAndPeriod(ccy, from.atStartOfDay(), to.atTime(LocalTime.MAX));
+                .findAllByCcyAndPeriod(ccy, from.atStartOfDay(), to.atTime(LocalTime.MAX), pageRequest);
     }
 }

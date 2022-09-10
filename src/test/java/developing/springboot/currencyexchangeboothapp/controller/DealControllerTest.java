@@ -1,8 +1,6 @@
 package developing.springboot.currencyexchangeboothapp.controller;
 
-import developing.springboot.currencyexchangeboothapp.dto.DealRequestDto;
-import developing.springboot.currencyexchangeboothapp.dto.DealResponseDto;
-import developing.springboot.currencyexchangeboothapp.dto.PasswordRequestDto;
+import developing.springboot.currencyexchangeboothapp.dto.*;
 import developing.springboot.currencyexchangeboothapp.model.Deal;
 import developing.springboot.currencyexchangeboothapp.model.OtpPassword;
 import developing.springboot.currencyexchangeboothapp.model.Status;
@@ -10,12 +8,10 @@ import developing.springboot.currencyexchangeboothapp.service.DealService;
 import developing.springboot.currencyexchangeboothapp.service.OtpPasswordService;
 import developing.springboot.currencyexchangeboothapp.service.mapper.DealMapper;
 import developing.springboot.currencyexchangeboothapp.service.mapper.OtpPasswordMapper;
-import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.module.mockmvc.RestAssuredMockMvc;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import io.restassured.parsing.Parser;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -54,13 +50,13 @@ class DealControllerTest {
         requestDto.setCcySale("USD");
         requestDto.setCcyBuy("UAH");
         requestDto.setCcySaleAmount(BigDecimal.valueOf(1000));
-        requestDto.setPhone("(050) 500-50-05");
+        requestDto.setPhone("+380505005050");
 
         Deal inputDeal = new Deal();
         inputDeal.setCcySale("USD");
         inputDeal.setCcyBuy("UAH");
         inputDeal.setCcySaleAmount(BigDecimal.valueOf(1000));
-        inputDeal.setPhone("(050) 500-50-05");
+        inputDeal.setPhone("+380505005050");
         inputDeal.setDateTime(LocalDateTime.of(1991,8,24,15,30,0));
         inputDeal.setStatus(Status.NEW);
 
@@ -69,21 +65,24 @@ class DealControllerTest {
         createdDeal.setCcySale("USD");
         createdDeal.setCcyBuy("UAH");
         createdDeal.setCcySaleAmount(BigDecimal.valueOf(1000));
-        createdDeal.setCcyBuyAmount(BigDecimal.valueOf(399000));
-        createdDeal.setPhone("(050) 500-50-05");
+        createdDeal.setCcyBuyAmount(BigDecimal.valueOf(39900));
+        createdDeal.setPhone("+380505005050");
         createdDeal.setDateTime(LocalDateTime.of(1991,8,24,15,30,0));
         createdDeal.setStatus(Status.NEW);
 
         DealResponseDto responseDto = new DealResponseDto();
-        responseDto.setCcyBuyAmount(BigDecimal.valueOf(399000));
-        responseDto.setPhone("(050) 500-50-05");
+        responseDto.setCcyBuyAmount(BigDecimal.valueOf(39900));
+        responseDto.setPhone("+380505005050");
+
+        BuyAmountResponseDto buyAmountResponseDto = new BuyAmountResponseDto();
+        buyAmountResponseDto.setCcyBuyAmount(BigDecimal.valueOf(39900));
+        buyAmountResponseDto.setPhone("+380505005050");
 
         Mockito.when(dealMapper.toModel(requestDto)).thenReturn(inputDeal);
         Mockito.when(dealService.create(inputDeal)).thenReturn(createdDeal);
         Mockito.when(otpPasswordService.create(createdDeal)).thenReturn(new OtpPassword());
         Mockito.when(dealMapper.toDto(createdDeal)).thenReturn(responseDto);
-
-        RestAssured.registerParser("text/plain", Parser.JSON);
+        Mockito.when(dealMapper.toBuyAmountDto(createdDeal)).thenReturn(buyAmountResponseDto);
 
         RestAssuredMockMvc.given()
                 .contentType(ContentType.JSON)
@@ -93,7 +92,7 @@ class DealControllerTest {
                 .then()
                 .statusCode(200)
                 .body("ccyBuyAmount", Matchers.equalTo(39900))
-                .body("phone", Matchers.equalTo("(050) 500-50-05"));
+                .body("phone", Matchers.equalTo("+380505005050"));
     }
 
     @Test
@@ -116,8 +115,12 @@ class DealControllerTest {
         deal.setDateTime(LocalDateTime.of(1991,8,24,15,30,0));
         deal.setStatus(Status.PERFORMED);
 
+        DealStatusResponseDto dealStatusResponseDto = new DealStatusResponseDto();
+        dealStatusResponseDto.setMessage("Deal confirmed: Status.PERFORMED");
+
         Mockito.when(otpPasswordMapper.toModel(requestDto)).thenReturn(otpPassword);
         Mockito.when(otpPasswordService.passwordValidation(otpPassword)).thenReturn(deal);
+        Mockito.when(dealMapper.toDealStatusDto(deal)).thenReturn(dealStatusResponseDto);
 
         RestAssuredMockMvc.given()
                 .contentType(ContentType.JSON)
@@ -126,7 +129,7 @@ class DealControllerTest {
                 .post("/deal/validate-otp")
                 .then()
                 .statusCode(200)
-                .body("content", Matchers.equalTo("password is correct"));
+                .body("message", Matchers.equalTo("Deal confirmed: Status.PERFORMED"));
     }
 
     @Test

@@ -1,12 +1,24 @@
 package developing.springboot.currencyexchangeboothapp.dto;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
+
+import developing.springboot.currencyexchangeboothapp.model.Status;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
+
 @Getter
 @Setter
+@EqualsAndHashCode
 public class DealResponseDto {
+    private Long id;
+    private String ccySale;
+    private String ccyBuy;
+    private BigDecimal ccySaleAmount;
     private BigDecimal ccyBuyAmount;
     private String phone;
+    private LocalDateTime dateTime;
+    private Status status;
 }

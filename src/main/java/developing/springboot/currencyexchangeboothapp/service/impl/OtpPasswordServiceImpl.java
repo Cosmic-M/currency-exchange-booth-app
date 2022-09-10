@@ -1,10 +1,11 @@
-package developing.springboot.currencyexchangeboothapp.service;
+package developing.springboot.currencyexchangeboothapp.service.impl;
 
 import developing.springboot.currencyexchangeboothapp.model.Deal;
 import developing.springboot.currencyexchangeboothapp.model.OtpPassword;
 import developing.springboot.currencyexchangeboothapp.model.Status;
 import developing.springboot.currencyexchangeboothapp.repository.DealRepository;
 import developing.springboot.currencyexchangeboothapp.repository.OtpPasswordRepository;
+import developing.springboot.currencyexchangeboothapp.service.OtpPasswordService;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Example;

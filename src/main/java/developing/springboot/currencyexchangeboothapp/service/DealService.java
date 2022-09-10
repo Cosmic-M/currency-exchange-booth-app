@@ -2,6 +2,8 @@ package developing.springboot.currencyexchangeboothapp.service;
 
 import developing.springboot.currencyexchangeboothapp.dto.ReportResponse;
 import developing.springboot.currencyexchangeboothapp.model.Deal;
+import org.springframework.data.domain.PageRequest;
+
 import java.time.LocalDate;
 import java.util.List;
 
@@ -12,5 +14,5 @@ public interface DealService {
 
     List<ReportResponse> doReport();
 
-    List<Deal> findAllByCcyAndPeriod(String ccy, LocalDate from, LocalDate to);
+    List<Deal> findAllByCcyAndPeriod(String ccy, LocalDate from, LocalDate to, PageRequest pageRequest);
 }

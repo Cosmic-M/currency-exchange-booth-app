@@ -1,9 +1,7 @@
 package developing.springboot.currencyexchangeboothapp.controller;
 
-import developing.springboot.currencyexchangeboothapp.SmsSender;
-import developing.springboot.currencyexchangeboothapp.dto.DealRequestDto;
-import developing.springboot.currencyexchangeboothapp.dto.DealResponseDto;
-import developing.springboot.currencyexchangeboothapp.dto.PasswordRequestDto;
+import developing.springboot.currencyexchangeboothapp.dto.*;
+import developing.springboot.currencyexchangeboothapp.service.SmsSender;
 import developing.springboot.currencyexchangeboothapp.model.Deal;
 import developing.springboot.currencyexchangeboothapp.model.OtpPassword;
 import developing.springboot.currencyexchangeboothapp.model.Status;
@@ -19,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/deal")
@@ -30,19 +30,19 @@ public class DealController {
     private final SmsSender smsSender;
 
     @PostMapping("/create")
-    public DealResponseDto createDeal(@RequestBody DealRequestDto requestDto) {
+    public BuyAmountResponseDto createDeal(@RequestBody @Valid DealRequestDto requestDto) {
         Deal newDeal = dealMapper.toModel(requestDto);
         newDeal = dealService.create(newDeal);
         OtpPassword otpPassword = otpPasswordService.create(newDeal);
-        smsSender.sendSms(otpPassword, newDeal.getPhone());
-        return dealMapper.toDto(newDeal);
+        //smsSender.sendSms(otpPassword.getPassword(), newDeal.getPhone());
+        return dealMapper.toBuyAmountDto(newDeal);
     }
 
     @PostMapping("/validate-otp")
-    public String validateOtp(@RequestBody PasswordRequestDto passwordRequestDto) {
+    public DealStatusResponseDto validateOtp(@RequestBody PasswordRequestDto passwordRequestDto) {
         OtpPassword otpPassword = otpPasswordMapper.toModel(passwordRequestDto);
         Deal deal = otpPasswordService.passwordValidation(otpPassword);
-        return deal.getStatus() == Status.PERFORMED ? "password is correct" : "wrong password";
+        return dealMapper.toDealStatusDto(deal);
     }
 
     @DeleteMapping("/delete")

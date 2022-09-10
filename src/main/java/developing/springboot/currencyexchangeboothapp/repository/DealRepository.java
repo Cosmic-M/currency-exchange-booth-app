@@ -4,6 +4,8 @@ import developing.springboot.currencyexchangeboothapp.dto.ReportResponse;
 import developing.springboot.currencyexchangeboothapp.model.Deal;
 import java.time.LocalDateTime;
 import java.util.List;
+
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -29,5 +31,5 @@ public interface DealRepository extends JpaRepository<Deal, Long> {
     List<ReportResponse> getDealsPerDay();
 
     @Query("FROM Deal d WHERE d.ccySale = ?1 AND d.dateTime BETWEEN ?2 AND ?3")
-    List<Deal> findAllByCcyAndPeriod(String ccyBuy, LocalDateTime from, LocalDateTime to);
+    List<Deal> findAllByCcyAndPeriod(String ccyBuy, LocalDateTime from, LocalDateTime to, Pageable pageable);
 }

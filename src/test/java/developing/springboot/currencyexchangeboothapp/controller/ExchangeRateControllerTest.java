@@ -1,14 +1,7 @@
 package developing.springboot.currencyexchangeboothapp.controller;
 
-import developing.springboot.currencyexchangeboothapp.dto.PasswordRequestDto;
-import developing.springboot.currencyexchangeboothapp.model.Deal;
 import developing.springboot.currencyexchangeboothapp.model.ExchangeRate;
-import developing.springboot.currencyexchangeboothapp.model.OtpPassword;
-import developing.springboot.currencyexchangeboothapp.model.Status;
 import developing.springboot.currencyexchangeboothapp.service.ExchangeRateService;
-import developing.springboot.currencyexchangeboothapp.service.OtpPasswordService;
-import developing.springboot.currencyexchangeboothapp.service.mapper.OtpPasswordMapper;
-import io.restassured.http.ContentType;
 import io.restassured.module.mockmvc.RestAssuredMockMvc;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -59,11 +52,8 @@ class ExchangeRateControllerTest {
 
         List<ExchangeRate> mockExchangeRateList = List.of(usd, eur);
 
-        Mockito.when(exchangeRateService.getExchangeRate())
-                .thenReturn(mockExchangeRateList);
-
-        Mockito.when(exchangeRateService.save(mockExchangeRateList))
-                .thenReturn(mockExchangeRateList);
+        Mockito.when(exchangeRateService.getExchangeRate()).thenReturn(mockExchangeRateList);
+        Mockito.when(exchangeRateService.save(mockExchangeRateList)).thenReturn(mockExchangeRateList);
 
         RestAssuredMockMvc.when()
                 .get("/exchange-rate/open-work-day")

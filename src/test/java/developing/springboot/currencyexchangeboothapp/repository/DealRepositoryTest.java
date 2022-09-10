@@ -7,6 +7,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import developing.springboot.currencyexchangeboothapp.util.SortDealsUtil;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -15,6 +16,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @ExtendWith(SpringExtension.class)
@@ -121,16 +124,24 @@ class DealRepositoryTest {
     @Test
     void findAllByCcyAndPeriod_repoHasCorrespondData_ok() {
         List<Deal> deals = new ArrayList<>();
+        deal1.setDateTime(LocalDateTime.of(2022, 9, 5, 10, 0, 0));
         deals.add(deal1);
-        deals.add(deal2);
         deal2.setDateTime(LocalDateTime.of(1991, 8, 24, 6, 0, 0));
+        deals.add(deal2);
+        deal3.setDateTime(LocalDateTime.of(2022, 9, 5, 10, 0, 0));
         deals.add(deal3);
+        deal4.setDateTime(LocalDateTime.of(2022, 9, 5, 10, 0, 0));
         deals.add(deal4);
+        deal5.setDateTime(LocalDateTime.of(2022, 9, 5, 10, 0, 0));
         deals.add(deal5);
         dealRepository.saveAll(deals);
+
+        Sort sort = SortDealsUtil.getSortingDeals("id");
+
         List<Deal> result = dealRepository.findAllByCcyAndPeriod("EUR",
-                LocalDateTime.of(2022, 2, 2, 12, 0, 0),
-                LocalDateTime.of(2022, 9, 7, 23, 59, 59));
+                LocalDateTime.of(2022, 9, 2, 12, 0, 0),
+                LocalDateTime.of(2022, 9, 7, 23, 59, 59),
+                PageRequest.of(0, 20, sort));
         Assertions.assertEquals(1, result.size());
         String phoneFromDb = result.get(0).getPhone();
         Assertions.assertEquals("(050) 555-55-55", phoneFromDb);
@@ -144,9 +155,13 @@ class DealRepositoryTest {
         deals.add(deal2);
         deals.add(deal3);
         dealRepository.saveAll(deals);
+
+        Sort sort = SortDealsUtil.getSortingDeals("id");
+
         List<Deal> result = dealRepository.findAllByCcyAndPeriod("EUR",
                 LocalDateTime.of(1980, 1, 1, 12, 0, 0),
-                LocalDateTime.of(2020, 1, 1, 12, 0, 0));
+                LocalDateTime.of(2020, 1, 1, 12, 0, 0),
+                PageRequest.of(0, 20, sort));
         Assertions.assertEquals(0, result.size());
     }
 }

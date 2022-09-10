@@ -1,17 +1,15 @@
 package developing.springboot.currencyexchangeboothapp.dto;
 
-import java.math.BigDecimal;
-
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.math.BigDecimal;
+
 @Getter
 @Setter
 @EqualsAndHashCode
-public class ApiExchangeRateDto {
-    private String ccy;
-    private String base_ccy;
-    private BigDecimal buy;
-    private BigDecimal sale;
+public class BuyAmountResponseDto {
+    private BigDecimal ccyBuyAmount;
+    private String phone;
 }

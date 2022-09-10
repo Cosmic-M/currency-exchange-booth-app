@@ -35,7 +35,7 @@ class ExchangeRateRepositoryTest {
         exchangeRateRepository.save(exchangeRate);
         BigDecimal ccySale = exchangeRateRepository.getCcySale(exchangeRate.getCcy());
         Assertions.assertNotNull(ccySale);
-        Assertions.assertEquals(BigDecimal.valueOf(404000, 4), ccySale);
+        Assertions.assertEquals(BigDecimal.valueOf(40400000, 6), ccySale);
     }
 
     @Test

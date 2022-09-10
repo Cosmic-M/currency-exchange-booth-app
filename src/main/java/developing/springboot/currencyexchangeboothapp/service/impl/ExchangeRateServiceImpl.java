@@ -1,8 +1,10 @@
-package developing.springboot.currencyexchangeboothapp.service;
+package developing.springboot.currencyexchangeboothapp.service.impl;
 
 import developing.springboot.currencyexchangeboothapp.dto.ApiExchangeRateDto;
 import developing.springboot.currencyexchangeboothapp.model.ExchangeRate;
 import developing.springboot.currencyexchangeboothapp.repository.ExchangeRateRepository;
+import developing.springboot.currencyexchangeboothapp.service.ExchangeRateService;
+import developing.springboot.currencyexchangeboothapp.service.HttpClient;
 import developing.springboot.currencyexchangeboothapp.service.mapper.ExchangeRateMapper;
 import java.time.LocalDateTime;
 import java.util.Arrays;
