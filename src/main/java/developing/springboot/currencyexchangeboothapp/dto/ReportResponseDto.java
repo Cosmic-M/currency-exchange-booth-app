@@ -12,5 +12,5 @@ public class ReportResponseDto {
 
     private int dealsCount;
 
-    Integer totalSum;
+    private Integer totalSum;
 }

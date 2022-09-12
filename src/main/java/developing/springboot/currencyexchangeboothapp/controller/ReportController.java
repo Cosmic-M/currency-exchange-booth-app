@@ -5,14 +5,14 @@ import developing.springboot.currencyexchangeboothapp.dto.ReportResponse;
 import developing.springboot.currencyexchangeboothapp.dto.ReportResponseDto;
 import developing.springboot.currencyexchangeboothapp.model.Deal;
 import developing.springboot.currencyexchangeboothapp.service.DealService;
-import developing.springboot.currencyexchangeboothapp.service.ReportResponseParser;
 import developing.springboot.currencyexchangeboothapp.service.mapper.DealMapper;
+import developing.springboot.currencyexchangeboothapp.service.mapper.ReportResponseParserMapper;
 import developing.springboot.currencyexchangeboothapp.util.DateTimePatternUtil;
-import java.time.LocalDate;
-import java.util.List;
 import developing.springboot.currencyexchangeboothapp.util.SortDealsUtil;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import java.time.LocalDate;
+import java.util.List;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
@@ -32,13 +32,13 @@ public class ReportController {
     @NonNull
     private DealMapper dealMapper;
 
-    @NonNull private ReportResponseParser reportResponseParser;
+    @NonNull private ReportResponseParserMapper reportResponseParserMapper;
 
     @GetMapping("/report")
     public List<ReportResponseDto> doReport() {
         List<ReportResponse> reportResponseList = dealService.doReport();
         return reportResponseList.stream()
-                .map(reportResponseParser::toDto)
+                .map(reportResponseParserMapper::toDto)
                 .toList();
     }
 

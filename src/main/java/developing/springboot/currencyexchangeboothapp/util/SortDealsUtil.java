@@ -16,7 +16,8 @@ public class SortDealsUtil {
                 Sort.Order order;
                 if (field.contains(ORDER_SPLITERATOR)) {
                     String[] fieldAndDirections = field.split(ORDER_SPLITERATOR);
-                    order = new Sort.Order(Sort.Direction.valueOf(fieldAndDirections[1]), fieldAndDirections[0]);
+                    order = new Sort.Order(Sort.Direction.valueOf(fieldAndDirections[1]),
+                            fieldAndDirections[0]);
                 } else {
                     order = new Sort.Order(Sort.Direction.ASC, field);
                 }

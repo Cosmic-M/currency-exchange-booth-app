@@ -41,7 +41,7 @@ class ExchangeRateMapperTest {
 
         apiExchangeRateDto = new ApiExchangeRateDto();
         apiExchangeRateDto.setCcy("EUR");
-        apiExchangeRateDto.setBase_ccy("UAH");
+        apiExchangeRateDto.setBaseCcy("UAH");
         apiExchangeRateDto.setBuy(BigDecimal.valueOf(39.400000));
         apiExchangeRateDto.setSale(BigDecimal.valueOf(40.400000));
     }

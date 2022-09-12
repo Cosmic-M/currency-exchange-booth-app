@@ -8,4 +8,8 @@ public interface ReportResponse {
     Integer getDealsCount();
 
     Integer getTotalCcySale();
+
+    void setCcySale(String ccySale);
+
+    void setCcyBuy(String ccyBuy);
 }

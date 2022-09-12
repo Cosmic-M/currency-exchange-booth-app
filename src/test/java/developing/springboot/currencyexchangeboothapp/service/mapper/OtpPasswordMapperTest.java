@@ -22,14 +22,12 @@ class OtpPasswordMapperTest {
         otpPassword.setPassword("123456");
 
         passwordRequestDto = new PasswordRequestDto();
-        passwordRequestDto.setId(10L);
         passwordRequestDto.setPassword("123456");
     }
 
     @Test
     void mapToModel_ok() {
         OtpPassword result = otpPasswordMapper.toModel(passwordRequestDto);
-        Assertions.assertEquals(10L, result.getId());
         Assertions.assertEquals("123456", result.getPassword());
     }
 }

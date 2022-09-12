@@ -8,7 +8,6 @@ import org.springframework.stereotype.Component;
 public class OtpPasswordMapper {
     public OtpPassword toModel(PasswordRequestDto passwordRequestDto) {
         OtpPassword otpPassword = new OtpPassword();
-        otpPassword.setId(passwordRequestDto.getId());
         otpPassword.setPassword(passwordRequestDto.getPassword());
         return otpPassword;
     }

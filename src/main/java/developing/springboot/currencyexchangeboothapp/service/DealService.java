@@ -13,5 +13,8 @@ public interface DealService {
 
     List<ReportResponse> doReport();
 
-    List<Deal> findAllByCcyAndPeriod(String ccy, LocalDate from, LocalDate to, PageRequest pageRequest);
+    List<Deal> findAllByCcyAndPeriod(String ccy,
+                                     LocalDate from,
+                                     LocalDate to,
+                                     PageRequest pageRequest);
 }

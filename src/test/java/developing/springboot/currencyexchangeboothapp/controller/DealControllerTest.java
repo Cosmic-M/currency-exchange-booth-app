@@ -1,8 +1,8 @@
 package developing.springboot.currencyexchangeboothapp.controller;
 
 import developing.springboot.currencyexchangeboothapp.dto.BuyAmountResponseDto;
-import developing.springboot.currencyexchangeboothapp.dto.DealResponseDto;
 import developing.springboot.currencyexchangeboothapp.dto.DealRequestDto;
+import developing.springboot.currencyexchangeboothapp.dto.DealResponseDto;
 import developing.springboot.currencyexchangeboothapp.dto.DealStatusResponseDto;
 import developing.springboot.currencyexchangeboothapp.dto.PasswordRequestDto;
 import developing.springboot.currencyexchangeboothapp.model.Deal;
@@ -90,7 +90,10 @@ class DealControllerTest {
 
         RestAssuredMockMvc.given()
                 .contentType(ContentType.JSON)
-                .body(new DealRequestDto(requestDto.getCcySale(), requestDto.getCcyBuy(), requestDto.getCcySaleAmount(), requestDto.getPhone()))
+                .body(new DealRequestDto(requestDto.getCcySale(),
+                        requestDto.getCcyBuy(),
+                        requestDto.getCcySaleAmount(),
+                        requestDto.getPhone()))
                 .when()
                 .post("/deal/create")
                 .then()
@@ -102,7 +105,6 @@ class DealControllerTest {
     @Test
     void confirmDeal_correctOtpPassword_ok() {
         PasswordRequestDto requestDto = new PasswordRequestDto();
-        requestDto.setId(15L);
         requestDto.setPassword("123456");
 
         OtpPassword otpPassword = new OtpPassword();

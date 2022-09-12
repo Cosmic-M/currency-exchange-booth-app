@@ -4,12 +4,11 @@ import developing.springboot.currencyexchangeboothapp.dto.ReportResponse;
 import developing.springboot.currencyexchangeboothapp.model.Deal;
 import developing.springboot.currencyexchangeboothapp.repository.DealRepository;
 import developing.springboot.currencyexchangeboothapp.repository.ExchangeRateRepository;
+import developing.springboot.currencyexchangeboothapp.service.DealService;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
-
-import developing.springboot.currencyexchangeboothapp.service.DealService;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;

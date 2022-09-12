@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface OtpPasswordRepository extends JpaRepository<OtpPassword, Long> {
+    OtpPassword findByPassword(String password);
 }

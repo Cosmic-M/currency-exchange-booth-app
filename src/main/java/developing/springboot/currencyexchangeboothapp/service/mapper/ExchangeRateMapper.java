@@ -11,7 +11,7 @@ public class ExchangeRateMapper {
     public ExchangeRate toModel(ApiExchangeRateDto apiExchangeRateDto) {
         ExchangeRate exchangeRate = new ExchangeRate();
         exchangeRate.setCcy(apiExchangeRateDto.getCcy());
-        exchangeRate.setBaseCcy(apiExchangeRateDto.getBase_ccy());
+        exchangeRate.setBaseCcy(apiExchangeRateDto.getBaseCcy());
         exchangeRate.setSale(apiExchangeRateDto.getSale());
         exchangeRate.setBuy(apiExchangeRateDto.getBuy());
         exchangeRate.setDateTime(LocalDateTime.now());

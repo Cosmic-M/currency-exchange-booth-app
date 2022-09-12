@@ -8,6 +8,5 @@ import lombok.Setter;
 @Setter
 @EqualsAndHashCode
 public class PasswordRequestDto {
-    private Long id;
     private String password;
 }

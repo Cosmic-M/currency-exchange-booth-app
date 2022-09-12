@@ -4,8 +4,8 @@ import developing.springboot.currencyexchangeboothapp.lib.ValidPhoneNumber;
 import java.math.BigDecimal;
 import javax.validation.constraints.Min;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
