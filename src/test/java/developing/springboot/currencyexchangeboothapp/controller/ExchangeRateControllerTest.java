@@ -55,7 +55,7 @@ class ExchangeRateControllerTest {
         Mockito.when(exchangeRateService.syncExchangeRate()).thenReturn(mockExchangeRateList);
 
         RestAssuredMockMvc.when()
-                .get("/exchange-rate/open-work-day")
+                .get("/exchange-rates/open-work-day")
                 .then()
                 .statusCode(200)
                 .body("size()", Matchers.equalTo(2))

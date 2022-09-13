@@ -1,11 +1,11 @@
 databaseChangeLog:
   - include:
-      file: db/changelog/changes/create-exchange_rate-table.sql
+      file: db/changelog/changes/create-exchange_rates-table.sql
   - include:
-      file: db/changelog/changes/create-deal-table.sql
+      file: db/changelog/changes/create-deals-table.sql
   - include:
-      file: db/changelog/changes/create-otp_password-table.sql
+      file: db/changelog/changes/create-otp_passwords-table.sql
   - include:
-      file: db/changelog/changes/add-exchange_rate.sql
+      file: db/changelog/changes/add-exchange_rates.sql
   - include:
       file: db/changelog/changes/add-deals.sql

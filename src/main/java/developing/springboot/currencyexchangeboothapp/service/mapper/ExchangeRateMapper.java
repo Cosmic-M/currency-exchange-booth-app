@@ -3,7 +3,7 @@ package developing.springboot.currencyexchangeboothapp.service.mapper;
 import developing.springboot.currencyexchangeboothapp.dto.ApiExchangeRateDto;
 import developing.springboot.currencyexchangeboothapp.dto.ExchangeRateResponseDto;
 import developing.springboot.currencyexchangeboothapp.model.ExchangeRate;
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -14,7 +14,7 @@ public class ExchangeRateMapper {
         exchangeRate.setBaseCcy(apiExchangeRateDto.getBaseCcy());
         exchangeRate.setSale(apiExchangeRateDto.getSale());
         exchangeRate.setBuy(apiExchangeRateDto.getBuy());
-        exchangeRate.setDateTime(LocalDateTime.now());
+        exchangeRate.setDateTime(ZonedDateTime.now().toLocalDateTime());
         return exchangeRate;
     }
 

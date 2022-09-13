@@ -3,9 +3,8 @@
 <h3>To launch app:</h3>
 - pull this file<br>
 - start docker on your local machine<br>
-- open terminal and start command: docker-compose up<br>
-- open browser: http://localhost:6868/swagger-ui/#/<br>
-- H2 connected, please follow the link: http://localhost:8080/h2-console ##password -> root##<br>
+- open terminal and start command: docker run -ti --rm -e TZ=Europe/Kiev -p 8085:8080 exchange-rate-app<br>
+- open browser: http://localhost:8085/swagger-ui/#/ and http://localhost:8085/h2<br>
 - I added some scripts for creating tables and filling them with data, so...<br>
 everything prepared to working<br>
 

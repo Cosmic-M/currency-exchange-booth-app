@@ -13,7 +13,6 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import java.time.LocalDate;
 import java.util.List;
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -27,13 +26,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @RequestMapping
 public class ReportController {
-    @NonNull
-    private DealService dealService;
-    @NonNull
-    private DealMapper dealMapper;
+    private final DealService dealService;
+    private final DealMapper dealMapper;
+    private final ReportResponseParserMapper reportResponseParserMapper;
 
-    @NonNull private ReportResponseParserMapper reportResponseParserMapper;
-
+    @ApiOperation(value = "get daily report")
     @GetMapping("/report")
     public List<ReportResponseDto> doReport() {
         List<ReportResponse> reportResponseList = dealService.doReport();
@@ -42,9 +39,10 @@ public class ReportController {
                 .toList();
     }
 
-    @ApiOperation(value = "get deal's list")
+    @ApiOperation(value = "get deal's list by currency and period")
     @GetMapping("/ccy-period")
-    public List<DealResponseDto> getDeals(@RequestParam String ccySale,
+    public List<DealResponseDto> getDeals(@RequestParam @ApiParam(
+            value = "Please assign currency from 'USD', 'EUR' or 'UAH'") String ccySale,
                                           @RequestParam @DateTimeFormat(pattern =
                                                   DateTimePatternUtil.DATE_PATTERN) LocalDate from,
                                           @RequestParam @DateTimeFormat(pattern =
@@ -56,7 +54,10 @@ public class ReportController {
                                           @ApiParam(value = "default value is 0")
                                           Integer page,
                                           @RequestParam(defaultValue = "id")
-                                          @ApiParam(value = "default value is id")
+                                          @ApiParam(value = "default value is id (but you can "
+                                                  + "apply next relevant meanings: ccySale, "
+                                                  + "ccyBuy, ccySaleAmount, ccyBuyAmount, phone, "
+                                                  + "dateTime, status)")
                                           String sortBy) {
         Sort sort = SortDealsUtil.getSortingDeals(sortBy);
         List<Deal> deals = dealService

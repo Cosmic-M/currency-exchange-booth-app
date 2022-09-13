@@ -18,7 +18,7 @@ import lombok.Setter;
 @Setter
 @Entity
 @EqualsAndHashCode
-@Table(name = "deal")
+@Table(name = "deals")
 public class Deal {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

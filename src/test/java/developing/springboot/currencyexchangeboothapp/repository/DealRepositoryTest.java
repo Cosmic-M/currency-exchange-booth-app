@@ -86,23 +86,6 @@ class DealRepositoryTest {
     }
 
     @Test
-    void deleteBy_repoHasCorrespondData_ok() {
-        String phone = "(050) 500-50-05";
-        deal1.setStatus(Status.NEW);
-        dealRepository.save(deal1);
-        dealRepository.deleteBy(phone);
-        Assertions.assertEquals(0, dealRepository.findAll().size());
-    }
-
-    @Test
-    void deleteBy_repoHasNotCorrespondData_notOk() {
-        String phone = "(050) 500-50-05";
-        dealRepository.save(deal1);
-        dealRepository.deleteBy(phone);
-        Assertions.assertEquals(1, dealRepository.findAll().size());
-    }
-
-    @Test
     void getDailyReport_repoHasCorrespondData_ok() {
         List<Deal> deals = new ArrayList<>();
         deals.add(deal1);

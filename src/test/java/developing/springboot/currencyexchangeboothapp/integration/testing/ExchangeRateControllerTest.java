@@ -46,7 +46,7 @@ class ExchangeRateControllerTest {
 
     @Test
     void openWorkDayShouldReturnValidJson() throws Exception {
-        String jsonString = this.mockMvc.perform(get("/exchange-rate/open-work-day"))
+        String jsonString = this.mockMvc.perform(get("/exchange-rates/open-work-day"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andReturn()
@@ -65,7 +65,7 @@ class ExchangeRateControllerTest {
 
     @Test
     void openWorkDayShouldCorrectlySafeDataIntoDB() throws Exception {
-        String jsonString = this.mockMvc.perform(get("/exchange-rate/open-work-day"))
+        String jsonString = this.mockMvc.perform(get("/exchange-rates/open-work-day"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andReturn()

@@ -95,7 +95,7 @@ class DealControllerTest {
                         requestDto.getCcySaleAmount(),
                         requestDto.getPhone()))
                 .when()
-                .post("/deal/create")
+                .post("/deals/create")
                 .then()
                 .statusCode(200)
                 .body("ccyBuyAmount", Matchers.equalTo(39900))
@@ -132,7 +132,7 @@ class DealControllerTest {
                 .contentType(ContentType.JSON)
                 .body(requestDto)
                 .when()
-                .post("/deal/validate-otp")
+                .post("/deals/validate-otp")
                 .then()
                 .statusCode(200)
                 .body("message", Matchers.equalTo("Deal confirmed: Status.PERFORMED"));

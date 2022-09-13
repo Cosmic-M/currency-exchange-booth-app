@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS deal (
+CREATE TABLE IF NOT EXISTS deals (
     id bigint auto_increment,
     ccy_sale varchar(255) NOT NULL,
     ccy_buy varchar(255) NOT NULL,
@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS deal (
     phone varchar(255) NOT NULL,
     date_time timestamp NOT NULL,
     status varchar(255) NOT NULL,
-    CONSTRAINT deal_pk PRIMARY KEY (id)
+    CONSTRAINT deals_pk PRIMARY KEY (id)
     );
 
---rollback DROP TABLE deal;
+--rollback DROP TABLE deals;

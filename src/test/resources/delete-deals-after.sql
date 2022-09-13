@@ -1,1 +1,1 @@
-delete from deal;
+delete from deals;

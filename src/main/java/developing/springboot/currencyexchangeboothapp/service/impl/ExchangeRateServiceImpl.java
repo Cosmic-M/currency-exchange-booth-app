@@ -11,10 +11,15 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 @Service
+@EnableScheduling
+@RequiredArgsConstructor
 public class ExchangeRateServiceImpl implements ExchangeRateService {
     private final ExchangeRateMapper exchangeRateMapper;
     private final ExchangeRateRepository exchangeRateRepository;
@@ -22,12 +27,9 @@ public class ExchangeRateServiceImpl implements ExchangeRateService {
     @Value(value = "${privateBankApiLink}")
     private String apiLink;
 
-    public ExchangeRateServiceImpl(ExchangeRateMapper exchangeRateMapper,
-                                   ExchangeRateRepository exchangeRateRepository,
-                               HttpClient httpClient) {
-        this.exchangeRateMapper = exchangeRateMapper;
-        this.exchangeRateRepository = exchangeRateRepository;
-        this.httpClient = httpClient;
+    @Scheduled(cron = "0 55 8 * * ?", zone = "Europe/Kiev")
+    private void synchronizeBeforeWorkDay() {
+        syncExchangeRate();
     }
 
     @Override

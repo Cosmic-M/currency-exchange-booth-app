@@ -1,1 +1,1 @@
-delete from otp_password;
+delete from otp_passwords;

@@ -1,1 +1,1 @@
-delete from exchange_rate;
+delete from exchange_rates;

@@ -7,10 +7,7 @@ import lombok.Setter;
 @Setter
 public class ReportResponseDto {
     private String currency;
-
     private Operation operation;
-
     private int dealsCount;
-
     private Integer totalSum;
 }

@@ -10,7 +10,7 @@ import lombok.Setter;
 @Setter
 @Getter
 @Entity
-@Table(name = "otp_password")
+@Table(name = "otp_passwords")
 public class OtpPassword {
     @Id
     @Column(name = "deal_id")

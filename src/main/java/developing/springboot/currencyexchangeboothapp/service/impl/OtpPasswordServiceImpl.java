@@ -7,7 +7,6 @@ import developing.springboot.currencyexchangeboothapp.repository.DealRepository;
 import developing.springboot.currencyexchangeboothapp.repository.OtpPasswordRepository;
 import developing.springboot.currencyexchangeboothapp.service.OtpPasswordService;
 import java.util.Random;
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
@@ -15,14 +14,16 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class OtpPasswordServiceImpl implements OtpPasswordService {
-    @NonNull private OtpPasswordRepository otpPasswordRepository;
-    @NonNull private DealRepository dealRepository;
+    private final OtpPasswordRepository otpPasswordRepository;
+    private final DealRepository dealRepository;
 
     @Override
     public Deal passwordValidation(OtpPassword otpPassword) {
         boolean isPresent = otpPasswordRepository.exists(Example.of(otpPassword));
         otpPassword = otpPasswordRepository.findByPassword(otpPassword.getPassword());
-        Deal deal = dealRepository.findCoincidenceById(otpPassword.getId());
+        Long otpPasswordId = otpPassword.getId();
+        Deal deal = dealRepository.findById(otpPasswordId).orElseThrow(() ->
+                new RuntimeException("Cannot find any deal from DB by id=" + otpPasswordId));
         otpPasswordRepository.delete(otpPassword);
         Status status = isPresent ? Status.PERFORMED : Status.CANCELED;
         deal.setStatus(status);

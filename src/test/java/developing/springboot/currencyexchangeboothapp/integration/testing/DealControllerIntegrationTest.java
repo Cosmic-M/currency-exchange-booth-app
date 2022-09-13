@@ -61,7 +61,7 @@ class DealControllerIntegrationTest {
         body.put("ccySaleAmount", "100");
         body.put("phone", "+380501234567");
         String jsonString = gson.toJson(body);
-        String jsonResponseString = mockMvc.perform(post("/deal/create")
+        String jsonResponseString = mockMvc.perform(post("/deals/create")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(jsonString)
                         .accept(MediaType.APPLICATION_JSON))
@@ -72,7 +72,7 @@ class DealControllerIntegrationTest {
         BuyAmountResponseDto buyAmountResponseDto
                 = gson.fromJson(jsonResponseString, BuyAmountResponseDto.class);
         Assertions.assertEquals(body.get("phone"), buyAmountResponseDto.getPhone());
-        Assertions.assertEquals(exchangeRateRepository.getCcySale(body.get("ccySale"))
+        Assertions.assertEquals(exchangeRateRepository.getCcySaleForCurrency(body.get("ccySale"))
                 .multiply(BigDecimal.valueOf(Long.parseLong(body.get("ccySaleAmount")))),
                 buyAmountResponseDto.getCcyBuyAmount());
     }
@@ -89,7 +89,7 @@ class DealControllerIntegrationTest {
         body.put("ccySaleAmount", "100");
         body.put("phone", "(050) 345-67-89");
         String jsonString = gson.toJson(body);
-        this.mockMvc.perform(post("/deal/create")
+        this.mockMvc.perform(post("/deals/create")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(jsonString)
                         .accept(MediaType.APPLICATION_JSON))
@@ -105,7 +105,7 @@ class DealControllerIntegrationTest {
         Map<String, String> body = new HashMap<>();
         body.put("password", "123456");
         String jsonString = gson.toJson(body);
-        String jsonRespondString = mockMvc.perform(post("/deal/validate-otp")
+        String jsonRespondString = mockMvc.perform(post("/deals/validate-otp")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(jsonString)
                         .accept(MediaType.APPLICATION_JSON))
@@ -124,12 +124,12 @@ class DealControllerIntegrationTest {
     }
 
     @Test
-    @Sql(value = {"/create-deals-before.sql"},
+    @Sql(value = {"/create-deals-before.sql", "/create-otp-password-before.sql"},
             executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
-    @Sql(value = {"/delete-deals-after.sql"},
+    @Sql(value = {"/delete-deals-after.sql", "/delete-otp-password-after.sql"},
             executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     void deleteDealFromDB() throws Exception {
-        mockMvc.perform(delete("/deal/delete?phone=+380501234567"))
+        mockMvc.perform(delete("/deals/delete?phone=+380501234567"))
                 .andExpect(status().isOk());
     }
 }

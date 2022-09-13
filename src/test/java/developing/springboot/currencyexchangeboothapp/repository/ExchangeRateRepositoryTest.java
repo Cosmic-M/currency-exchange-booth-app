@@ -3,6 +3,7 @@ package developing.springboot.currencyexchangeboothapp.repository;
 import developing.springboot.currencyexchangeboothapp.model.ExchangeRate;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -30,19 +31,43 @@ class ExchangeRateRepositoryTest {
         exchangeRate.setDateTime(LocalDateTime.now());
     }
 
+    @AfterEach
+    void clearRepo() {
+        exchangeRateRepository.deleteAll();
+    }
+
     @Test
-    void expectToGetActualCcySale_ok() {
+    void getCcySaleForCurrency_dataIsActual_ok() {
         exchangeRateRepository.save(exchangeRate);
-        BigDecimal ccySale = exchangeRateRepository.getCcySale(exchangeRate.getCcy());
+        BigDecimal ccySale = exchangeRateRepository.getCcySaleForCurrency(exchangeRate.getCcy());
         Assertions.assertNotNull(ccySale);
         Assertions.assertEquals(BigDecimal.valueOf(40400000, 6), ccySale);
     }
 
     @Test
-    void testingWithOutOfDateData_notOk() {
+    void getCcySaleForCurrency_outOfDateData_notOk() {
         exchangeRate.setDateTime(LocalDateTime.of(1991, 8, 24, 12,0,0,0));
         exchangeRateRepository.save(exchangeRate);
-        BigDecimal ccySaleFromDb = exchangeRateRepository.getCcySale(exchangeRate.getCcy());
+        BigDecimal ccySaleFromDb = exchangeRateRepository
+                .getCcySaleForCurrency(exchangeRate.getCcy());
+        Assertions.assertNull(ccySaleFromDb);
+    }
+
+    @Test
+    void getCcySaleForNationCurrency_dataIsActual_ok() {
+        exchangeRateRepository.save(exchangeRate);
+        BigDecimal ccySale = exchangeRateRepository
+                .getCcySaleForNationCurrency(exchangeRate.getCcy());
+        Assertions.assertNotNull(ccySale);
+        Assertions.assertEquals(BigDecimal.valueOf(39400000, 6), ccySale);
+    }
+
+    @Test
+    void getCcySaleForNationCurrency_outOfDateData_notOk() {
+        exchangeRate.setDateTime(LocalDateTime.of(1991, 8, 24, 12,0,0,0));
+        exchangeRateRepository.save(exchangeRate);
+        BigDecimal ccySaleFromDb = exchangeRateRepository
+                .getCcySaleForCurrency(exchangeRate.getBaseCcy());
         Assertions.assertNull(ccySaleFromDb);
     }
 }

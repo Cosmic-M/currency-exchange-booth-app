@@ -11,6 +11,8 @@ import developing.springboot.currencyexchangeboothapp.service.OtpPasswordService
 import developing.springboot.currencyexchangeboothapp.service.SmsSender;
 import developing.springboot.currencyexchangeboothapp.service.mapper.DealMapper;
 import developing.springboot.currencyexchangeboothapp.service.mapper.OtpPasswordMapper;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -22,7 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/deal")
+@RequestMapping("/deals")
 public class DealController {
     private final DealService dealService;
     private final DealMapper dealMapper;
@@ -30,6 +32,9 @@ public class DealController {
     private final OtpPasswordService otpPasswordService;
     private final SmsSender smsSender;
 
+    @ApiOperation(value = "method creates Deal with status 'NEW'. Please, "
+            + "put valid phone number format (for example: +380501234567). "
+            + "'USD', 'EUR', 'UAH' are valid for ccyBuy and ccySale")
     @PostMapping("/create")
     public BuyAmountResponseDto createDeal(@RequestBody @Valid DealRequestDto requestDto) {
         Deal newDeal = dealMapper.toModel(requestDto);
@@ -39,15 +44,21 @@ public class DealController {
         return dealMapper.toBuyAmountDto(newDeal);
     }
 
+    @ApiOperation(value = "method determine if phone number is valid")
     @PostMapping("/validate-otp")
-    public DealStatusResponseDto validateOtp(@RequestBody PasswordRequestDto passwordRequestDto) {
+    public DealStatusResponseDto validateOtp(
+            @RequestBody @ApiParam(value = "please, put otp password to confirm transaction")
+            @Valid PasswordRequestDto passwordRequestDto) {
         OtpPassword otpPassword = otpPasswordMapper.toModel(passwordRequestDto);
         Deal deal = otpPasswordService.passwordValidation(otpPassword);
         return dealMapper.toDealStatusDto(deal);
     }
 
+    @ApiOperation(value = "method delete deal with status 'NEW' by phone number")
     @DeleteMapping("/delete")
-    public void delete(@RequestParam String phone) {
+    public void delete(
+            @RequestParam @ApiParam(value = "put valid phone number format "
+            + "(for example: +380501234567)") @Valid String phone) {
         dealService.deleteDealBy(phone);
     }
 }
