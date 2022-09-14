@@ -4,7 +4,7 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.doNothing;
 
 import developing.springboot.currencyexchangeboothapp.dto.request.DealRequestDto;
-import developing.springboot.currencyexchangeboothapp.dto.request.PasswordRequestDto;
+import developing.springboot.currencyexchangeboothapp.dto.request.PasswordPhoneRequestDto;
 import developing.springboot.currencyexchangeboothapp.dto.response.BuyAmountResponseDto;
 import developing.springboot.currencyexchangeboothapp.dto.response.DealResponseDto;
 import developing.springboot.currencyexchangeboothapp.dto.response.DealStatusResponseDto;
@@ -15,7 +15,6 @@ import developing.springboot.currencyexchangeboothapp.service.DealService;
 import developing.springboot.currencyexchangeboothapp.service.OtpPasswordService;
 import developing.springboot.currencyexchangeboothapp.service.SmsSender;
 import developing.springboot.currencyexchangeboothapp.service.mapper.DealMapper;
-import developing.springboot.currencyexchangeboothapp.service.mapper.OtpPasswordMapper;
 import io.restassured.http.ContentType;
 import io.restassured.module.mockmvc.RestAssuredMockMvc;
 import java.math.BigDecimal;
@@ -42,8 +41,6 @@ class DealControllerTest {
     private DealMapper dealMapper;
     @MockBean
     private OtpPasswordService otpPasswordService;
-    @MockBean
-    private OtpPasswordMapper otpPasswordMapper;
     @MockBean
     private SmsSender smsSender;
     @Autowired
@@ -111,12 +108,9 @@ class DealControllerTest {
 
     @Test
     void validateOtp_correctOtpPassword_ok() {
-        PasswordRequestDto requestDto = new PasswordRequestDto();
+        PasswordPhoneRequestDto requestDto = new PasswordPhoneRequestDto();
         requestDto.setPassword("123456");
-
-        OtpPassword otpPassword = new OtpPassword();
-        otpPassword.setId(15L);
-        otpPassword.setPassword("123456");
+        requestDto.setPhone("+380505005050");
 
         Deal deal = new Deal();
         deal.setId(15L);
@@ -131,8 +125,8 @@ class DealControllerTest {
         DealStatusResponseDto dealStatusResponseDto = new DealStatusResponseDto();
         dealStatusResponseDto.setMessage("Deal confirmed: Status.PERFORMED");
 
-        Mockito.when(otpPasswordMapper.toModel(requestDto)).thenReturn(otpPassword);
-        Mockito.when(otpPasswordService.passwordValidation(otpPassword)).thenReturn(deal);
+        Mockito.when(otpPasswordService.passwordValidation(requestDto.getPassword(),
+                requestDto.getPhone())).thenReturn(deal);
         Mockito.when(dealMapper.toDealStatusDto(deal)).thenReturn(dealStatusResponseDto);
 
         RestAssuredMockMvc.given()
@@ -147,12 +141,9 @@ class DealControllerTest {
 
     @Test
     void validateOtp_wrongOtpPassword_notOk() {
-        PasswordRequestDto requestDto = new PasswordRequestDto();
+        PasswordPhoneRequestDto requestDto = new PasswordPhoneRequestDto();
         requestDto.setPassword("098765");
-
-        OtpPassword otpPassword = new OtpPassword();
-        otpPassword.setId(15L);
-        otpPassword.setPassword("123456");
+        requestDto.setPhone("+380505005050");
 
         Deal deal = new Deal();
         deal.setId(15L);
@@ -167,8 +158,8 @@ class DealControllerTest {
         DealStatusResponseDto dealStatusResponseDto = new DealStatusResponseDto();
         dealStatusResponseDto.setMessage("Wrong password: Status.CANCELED");
 
-        Mockito.when(otpPasswordMapper.toModel(requestDto)).thenReturn(otpPassword);
-        Mockito.when(otpPasswordService.passwordValidation(otpPassword)).thenReturn(deal);
+        Mockito.when(otpPasswordService.passwordValidation(requestDto.getPassword(),
+                requestDto.getPhone())).thenReturn(deal);
         Mockito.when(dealMapper.toDealStatusDto(deal)).thenReturn(dealStatusResponseDto);
 
         RestAssuredMockMvc.given()

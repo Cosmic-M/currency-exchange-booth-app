@@ -6,6 +6,7 @@
 - in your Intellij open src/main/resources/application.properties and assign <br>
 TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN and TWILIO_TRIAL_NUMBER <br>
 (you have got from console.twilio.com) in appropriate variables. <br>
+- run -> mvn clean package <br>
 - start docker on your local machine<br>
 - open terminal and start command: 'docker build -t exchange-rate-app .' <br>  
 then: 'docker run -ti --rm -e TZ=Europe/Kiev -p 8085:8080 exchange-rate-app' <br>

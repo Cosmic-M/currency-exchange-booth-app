@@ -1,7 +1,7 @@
 package developing.springboot.currencyexchangeboothapp.controller;
 
 import developing.springboot.currencyexchangeboothapp.dto.request.DealRequestDto;
-import developing.springboot.currencyexchangeboothapp.dto.request.PasswordRequestDto;
+import developing.springboot.currencyexchangeboothapp.dto.request.PasswordPhoneRequestDto;
 import developing.springboot.currencyexchangeboothapp.dto.response.BuyAmountResponseDto;
 import developing.springboot.currencyexchangeboothapp.dto.response.DealStatusResponseDto;
 import developing.springboot.currencyexchangeboothapp.model.Deal;
@@ -10,7 +10,6 @@ import developing.springboot.currencyexchangeboothapp.service.DealService;
 import developing.springboot.currencyexchangeboothapp.service.OtpPasswordService;
 import developing.springboot.currencyexchangeboothapp.service.SmsSender;
 import developing.springboot.currencyexchangeboothapp.service.mapper.DealMapper;
-import developing.springboot.currencyexchangeboothapp.service.mapper.OtpPasswordMapper;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import javax.validation.Valid;
@@ -28,7 +27,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class DealController {
     private final DealService dealService;
     private final DealMapper dealMapper;
-    private final OtpPasswordMapper otpPasswordMapper;
     private final OtpPasswordService otpPasswordService;
     private final SmsSender smsSender;
 
@@ -44,12 +42,13 @@ public class DealController {
         return dealMapper.toBuyAmountDto(newDeal);
     }
 
-    @ApiOperation(value = "method determine if phone number is valid")
+    @ApiOperation(value = "method determine by otp-password if phone number is valid")
     @PostMapping("/validate-otp")
     public DealStatusResponseDto validateOtp(
-            @RequestBody @Valid PasswordRequestDto passwordRequestDto) {
-        OtpPassword otpPassword = otpPasswordMapper.toModel(passwordRequestDto);
-        Deal deal = otpPasswordService.passwordValidation(otpPassword);
+            @RequestBody @Valid PasswordPhoneRequestDto passwordRequestDto) {
+        String phone = passwordRequestDto.getPhone();
+        String password = passwordRequestDto.getPassword();
+        Deal deal = otpPasswordService.passwordValidation(password, phone);
         return dealMapper.toDealStatusDto(deal);
     }
 

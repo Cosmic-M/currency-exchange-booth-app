@@ -8,7 +8,6 @@ import developing.springboot.currencyexchangeboothapp.repository.OtpPasswordRepo
 import developing.springboot.currencyexchangeboothapp.service.OtpPasswordService;
 import java.util.Random;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -18,16 +17,18 @@ public class OtpPasswordServiceImpl implements OtpPasswordService {
     private final DealRepository dealRepository;
 
     @Override
-    public Deal passwordValidation(OtpPassword otpPassword) {
-        boolean isPresent = otpPasswordRepository.exists(Example.of(otpPassword));
-        otpPassword = otpPasswordRepository.findByPassword(otpPassword.getPassword());
-        Long otpPasswordId = otpPassword.getId();
-        Deal deal = dealRepository.findById(otpPasswordId).orElseThrow(() ->
-                new RuntimeException("Cannot find any deal from DB by id=" + otpPasswordId));
-        otpPasswordRepository.delete(otpPassword);
-        Status status = isPresent ? Status.PERFORMED : Status.CANCELED;
-        deal.setStatus(status);
+    public Deal passwordValidation(String password, String phone) {
+        Deal deal = dealRepository.findDealByPhoneAndStatus(phone, Status.NEW);
+        if (deal == null) {
+            throw new RuntimeException(
+                    "Please, check if phone number from previous operation is the saim");
+        }
+        OtpPassword otpPassword = otpPasswordRepository.findByPassword(password);
+        Status dealStatus = otpPassword != null ? Status.PERFORMED : Status.CANCELED;
+        deal.setStatus(dealStatus);
         dealRepository.save(deal);
+        Long dealId = deal.getId();
+        otpPasswordRepository.deleteById(dealId);
         return deal;
     }
 

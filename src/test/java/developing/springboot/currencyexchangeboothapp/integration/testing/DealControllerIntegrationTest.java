@@ -112,6 +112,7 @@ class DealControllerIntegrationTest {
     void shouldReturnExpectedRespondForValidOtp() throws Exception {
         Map<String, String> body = new HashMap<>();
         body.put("password", "123456");
+        body.put("phone", "+380501234567");
         String jsonString = gson.toJson(body);
         String jsonRespondString = mockMvc.perform(post("/deals/validate-otp")
                         .contentType(MediaType.APPLICATION_JSON)
