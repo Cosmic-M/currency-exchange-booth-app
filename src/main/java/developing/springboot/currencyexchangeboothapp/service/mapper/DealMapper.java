@@ -1,9 +1,9 @@
 package developing.springboot.currencyexchangeboothapp.service.mapper;
 
-import developing.springboot.currencyexchangeboothapp.dto.BuyAmountResponseDto;
-import developing.springboot.currencyexchangeboothapp.dto.DealRequestDto;
-import developing.springboot.currencyexchangeboothapp.dto.DealResponseDto;
-import developing.springboot.currencyexchangeboothapp.dto.DealStatusResponseDto;
+import developing.springboot.currencyexchangeboothapp.dto.request.DealRequestDto;
+import developing.springboot.currencyexchangeboothapp.dto.response.BuyAmountResponseDto;
+import developing.springboot.currencyexchangeboothapp.dto.response.DealResponseDto;
+import developing.springboot.currencyexchangeboothapp.dto.response.DealStatusResponseDto;
 import developing.springboot.currencyexchangeboothapp.model.Deal;
 import developing.springboot.currencyexchangeboothapp.model.Status;
 import java.time.ZonedDateTime;

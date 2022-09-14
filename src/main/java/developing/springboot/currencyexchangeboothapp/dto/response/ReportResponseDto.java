@@ -1,5 +1,6 @@
-package developing.springboot.currencyexchangeboothapp.dto;
+package developing.springboot.currencyexchangeboothapp.dto.response;
 
+import developing.springboot.currencyexchangeboothapp.dto.Operation;
 import lombok.Getter;
 import lombok.Setter;
 

@@ -1,5 +1,7 @@
 package developing.springboot.currencyexchangeboothapp.repository;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import developing.springboot.currencyexchangeboothapp.model.ExchangeRate;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -26,8 +28,8 @@ class ExchangeRateRepositoryTest {
         exchangeRate = new ExchangeRate();
         exchangeRate.setCcy("EUR");
         exchangeRate.setBaseCcy("UAH");
-        exchangeRate.setBuy(BigDecimal.valueOf(39.400000));
-        exchangeRate.setSale(BigDecimal.valueOf(40.400000));
+        exchangeRate.setBuy(BigDecimal.valueOf(39.40000));
+        exchangeRate.setSale(BigDecimal.valueOf(40.40000));
         exchangeRate.setDateTime(LocalDateTime.now());
     }
 
@@ -41,7 +43,7 @@ class ExchangeRateRepositoryTest {
         exchangeRateRepository.save(exchangeRate);
         BigDecimal ccySale = exchangeRateRepository.getCcySaleForCurrency(exchangeRate.getCcy());
         Assertions.assertNotNull(ccySale);
-        Assertions.assertEquals(BigDecimal.valueOf(40400000, 6), ccySale);
+        assertThat(ccySale).isEqualByComparingTo(BigDecimal.valueOf(40.40));
     }
 
     @Test
@@ -59,7 +61,7 @@ class ExchangeRateRepositoryTest {
         BigDecimal ccySale = exchangeRateRepository
                 .getCcySaleForNationCurrency(exchangeRate.getCcy());
         Assertions.assertNotNull(ccySale);
-        Assertions.assertEquals(BigDecimal.valueOf(39400000, 6), ccySale);
+        assertThat(ccySale).isEqualByComparingTo(BigDecimal.valueOf(39.40));
     }
 
     @Test

@@ -1,4 +1,4 @@
-package developing.springboot.currencyexchangeboothapp.dto;
+package developing.springboot.currencyexchangeboothapp.dto.response;
 
 import developing.springboot.currencyexchangeboothapp.model.Status;
 import java.math.BigDecimal;

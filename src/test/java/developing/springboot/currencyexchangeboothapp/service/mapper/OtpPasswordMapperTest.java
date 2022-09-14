@@ -1,6 +1,6 @@
 package developing.springboot.currencyexchangeboothapp.service.mapper;
 
-import developing.springboot.currencyexchangeboothapp.dto.PasswordRequestDto;
+import developing.springboot.currencyexchangeboothapp.dto.request.PasswordRequestDto;
 import developing.springboot.currencyexchangeboothapp.model.OtpPassword;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;

@@ -1,5 +1,5 @@
-FROM openjdk:17-jdk-alpine
+FROM openjdk:17-oracle
 ARG JAR_FILE=target/*.jar
 COPY ${JAR_FILE} app.jar
-ENTRYPOINT ["java", "-jar", "/app.jar", "-web -webAllowOthers -tcp -tcpAllowOthers -browser"]
-EXPOSE 8085
+ENTRYPOINT ["java", "-jar", "/app.jar"]
+EXPOSE 8080

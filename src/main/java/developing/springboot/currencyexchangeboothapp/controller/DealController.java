@@ -1,9 +1,9 @@
 package developing.springboot.currencyexchangeboothapp.controller;
 
-import developing.springboot.currencyexchangeboothapp.dto.BuyAmountResponseDto;
-import developing.springboot.currencyexchangeboothapp.dto.DealRequestDto;
-import developing.springboot.currencyexchangeboothapp.dto.DealStatusResponseDto;
-import developing.springboot.currencyexchangeboothapp.dto.PasswordRequestDto;
+import developing.springboot.currencyexchangeboothapp.dto.request.DealRequestDto;
+import developing.springboot.currencyexchangeboothapp.dto.request.PasswordRequestDto;
+import developing.springboot.currencyexchangeboothapp.dto.response.BuyAmountResponseDto;
+import developing.springboot.currencyexchangeboothapp.dto.response.DealStatusResponseDto;
 import developing.springboot.currencyexchangeboothapp.model.Deal;
 import developing.springboot.currencyexchangeboothapp.model.OtpPassword;
 import developing.springboot.currencyexchangeboothapp.service.DealService;
@@ -40,15 +40,14 @@ public class DealController {
         Deal newDeal = dealMapper.toModel(requestDto);
         newDeal = dealService.create(newDeal);
         OtpPassword otpPassword = otpPasswordService.create(newDeal);
-        //smsSender.sendSms(otpPassword.getPassword(), newDeal.getPhone());
+        smsSender.sendSms(otpPassword.getPassword(), newDeal.getPhone());
         return dealMapper.toBuyAmountDto(newDeal);
     }
 
     @ApiOperation(value = "method determine if phone number is valid")
     @PostMapping("/validate-otp")
     public DealStatusResponseDto validateOtp(
-            @RequestBody @ApiParam(value = "please, put otp password to confirm transaction")
-            @Valid PasswordRequestDto passwordRequestDto) {
+            @RequestBody @Valid PasswordRequestDto passwordRequestDto) {
         OtpPassword otpPassword = otpPasswordMapper.toModel(passwordRequestDto);
         Deal deal = otpPasswordService.passwordValidation(otpPassword);
         return dealMapper.toDealStatusDto(deal);

@@ -1,4 +1,4 @@
-package developing.springboot.currencyexchangeboothapp.dto;
+package developing.springboot.currencyexchangeboothapp.dto.response;
 
 public interface ReportResponse {
     String getCcySale();

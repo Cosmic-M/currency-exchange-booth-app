@@ -1,7 +1,7 @@
 package developing.springboot.currencyexchangeboothapp.service.mapper;
 
 import developing.springboot.currencyexchangeboothapp.dto.ApiExchangeRateDto;
-import developing.springboot.currencyexchangeboothapp.dto.ExchangeRateResponseDto;
+import developing.springboot.currencyexchangeboothapp.dto.response.ExchangeRateResponseDto;
 import developing.springboot.currencyexchangeboothapp.model.ExchangeRate;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -25,8 +25,8 @@ class ExchangeRateMapperTest {
         exchangeRate.setId(10L);
         exchangeRate.setCcy("EUR");
         exchangeRate.setBaseCcy("UAH");
-        exchangeRate.setBuy(BigDecimal.valueOf(39.400000));
-        exchangeRate.setSale(BigDecimal.valueOf(40.400000));
+        exchangeRate.setBuy(BigDecimal.valueOf(39.40000));
+        exchangeRate.setSale(BigDecimal.valueOf(40.40000));
         exchangeRate.setDateTime(LocalDateTime
                 .of(2022, 9, 6, 12, 0, 5, 0));
 
@@ -34,16 +34,16 @@ class ExchangeRateMapperTest {
         exchangeRateResponseDto.setId(10L);
         exchangeRateResponseDto.setCcy("EUR");
         exchangeRateResponseDto.setBaseCcy("UAH");
-        exchangeRateResponseDto.setBuy(BigDecimal.valueOf(39.400000));
-        exchangeRateResponseDto.setSale(BigDecimal.valueOf(40.400000));
+        exchangeRateResponseDto.setBuy(BigDecimal.valueOf(39.40000));
+        exchangeRateResponseDto.setSale(BigDecimal.valueOf(40.40000));
         exchangeRateResponseDto.setDateTime(LocalDateTime
                 .of(2022, 9, 6, 12, 0, 5, 0));
 
         apiExchangeRateDto = new ApiExchangeRateDto();
         apiExchangeRateDto.setCcy("EUR");
         apiExchangeRateDto.setBaseCcy("UAH");
-        apiExchangeRateDto.setBuy(BigDecimal.valueOf(39.400000));
-        apiExchangeRateDto.setSale(BigDecimal.valueOf(40.400000));
+        apiExchangeRateDto.setBuy(BigDecimal.valueOf(39.40000));
+        apiExchangeRateDto.setSale(BigDecimal.valueOf(40.40000));
     }
 
     @Test
@@ -51,8 +51,8 @@ class ExchangeRateMapperTest {
         ExchangeRate result = exchangeRateMapper.toModel(apiExchangeRateDto);
         Assertions.assertEquals("EUR", result.getCcy());
         Assertions.assertEquals("UAH", result.getBaseCcy());
-        Assertions.assertEquals(BigDecimal.valueOf(39.400000), result.getBuy());
-        Assertions.assertEquals(BigDecimal.valueOf(40.400000), result.getSale());
+        Assertions.assertEquals(BigDecimal.valueOf(39.40000), result.getBuy());
+        Assertions.assertEquals(BigDecimal.valueOf(40.40000), result.getSale());
     }
 
     @Test
@@ -61,8 +61,8 @@ class ExchangeRateMapperTest {
         Assertions.assertEquals(10L, exchangeRate.getId());
         Assertions.assertEquals("EUR", result.getCcy());
         Assertions.assertEquals("UAH", result.getBaseCcy());
-        Assertions.assertEquals(BigDecimal.valueOf(39.400000), result.getBuy());
-        Assertions.assertEquals(BigDecimal.valueOf(40.400000), result.getSale());
+        Assertions.assertEquals(BigDecimal.valueOf(39.40000), result.getBuy());
+        Assertions.assertEquals(BigDecimal.valueOf(40.40000), result.getSale());
         Assertions.assertEquals(LocalDateTime
                 .of(2022, 9, 6, 12, 0, 5, 0),
                 result.getDateTime());

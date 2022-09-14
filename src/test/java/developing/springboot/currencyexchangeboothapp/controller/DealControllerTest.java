@@ -1,15 +1,19 @@
 package developing.springboot.currencyexchangeboothapp.controller;
 
-import developing.springboot.currencyexchangeboothapp.dto.BuyAmountResponseDto;
-import developing.springboot.currencyexchangeboothapp.dto.DealRequestDto;
-import developing.springboot.currencyexchangeboothapp.dto.DealResponseDto;
-import developing.springboot.currencyexchangeboothapp.dto.DealStatusResponseDto;
-import developing.springboot.currencyexchangeboothapp.dto.PasswordRequestDto;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.doNothing;
+
+import developing.springboot.currencyexchangeboothapp.dto.request.DealRequestDto;
+import developing.springboot.currencyexchangeboothapp.dto.request.PasswordRequestDto;
+import developing.springboot.currencyexchangeboothapp.dto.response.BuyAmountResponseDto;
+import developing.springboot.currencyexchangeboothapp.dto.response.DealResponseDto;
+import developing.springboot.currencyexchangeboothapp.dto.response.DealStatusResponseDto;
 import developing.springboot.currencyexchangeboothapp.model.Deal;
 import developing.springboot.currencyexchangeboothapp.model.OtpPassword;
 import developing.springboot.currencyexchangeboothapp.model.Status;
 import developing.springboot.currencyexchangeboothapp.service.DealService;
 import developing.springboot.currencyexchangeboothapp.service.OtpPasswordService;
+import developing.springboot.currencyexchangeboothapp.service.SmsSender;
 import developing.springboot.currencyexchangeboothapp.service.mapper.DealMapper;
 import developing.springboot.currencyexchangeboothapp.service.mapper.OtpPasswordMapper;
 import io.restassured.http.ContentType;
@@ -40,6 +44,8 @@ class DealControllerTest {
     private OtpPasswordService otpPasswordService;
     @MockBean
     private OtpPasswordMapper otpPasswordMapper;
+    @MockBean
+    private SmsSender smsSender;
     @Autowired
     private MockMvc mockMvc;
 
@@ -49,7 +55,7 @@ class DealControllerTest {
     }
 
     @Test
-    void shouldCreateDeal_correctData_ok() {
+    void createDeal_correctData_ok() {
         DealRequestDto requestDto = new DealRequestDto();
         requestDto.setCcySale("USD");
         requestDto.setCcyBuy("UAH");
@@ -85,6 +91,7 @@ class DealControllerTest {
         Mockito.when(dealMapper.toModel(requestDto)).thenReturn(inputDeal);
         Mockito.when(dealService.create(inputDeal)).thenReturn(createdDeal);
         Mockito.when(otpPasswordService.create(createdDeal)).thenReturn(new OtpPassword());
+        doNothing().when(smsSender).sendSms(anyString(), anyString());
         Mockito.when(dealMapper.toDto(createdDeal)).thenReturn(responseDto);
         Mockito.when(dealMapper.toBuyAmountDto(createdDeal)).thenReturn(buyAmountResponseDto);
 
@@ -103,7 +110,7 @@ class DealControllerTest {
     }
 
     @Test
-    void confirmDeal_correctOtpPassword_ok() {
+    void validateOtp_correctOtpPassword_ok() {
         PasswordRequestDto requestDto = new PasswordRequestDto();
         requestDto.setPassword("123456");
 
@@ -117,7 +124,7 @@ class DealControllerTest {
         deal.setCcyBuy("UAH");
         deal.setCcySaleAmount(BigDecimal.valueOf(1000));
         deal.setCcyBuyAmount(BigDecimal.valueOf(399000));
-        deal.setPhone("(050) 500-50-05");
+        deal.setPhone("+380505005050");
         deal.setDateTime(LocalDateTime.of(1991,8,24,15,30,0));
         deal.setStatus(Status.PERFORMED);
 
@@ -136,5 +143,41 @@ class DealControllerTest {
                 .then()
                 .statusCode(200)
                 .body("message", Matchers.equalTo("Deal confirmed: Status.PERFORMED"));
+    }
+
+    @Test
+    void validateOtp_wrongOtpPassword_notOk() {
+        PasswordRequestDto requestDto = new PasswordRequestDto();
+        requestDto.setPassword("098765");
+
+        OtpPassword otpPassword = new OtpPassword();
+        otpPassword.setId(15L);
+        otpPassword.setPassword("123456");
+
+        Deal deal = new Deal();
+        deal.setId(15L);
+        deal.setCcySale("USD");
+        deal.setCcyBuy("UAH");
+        deal.setCcySaleAmount(BigDecimal.valueOf(1000));
+        deal.setCcyBuyAmount(BigDecimal.valueOf(399000));
+        deal.setPhone("+380505005050");
+        deal.setDateTime(LocalDateTime.of(1991,8,24,15,30,0));
+        deal.setStatus(Status.CANCELED);
+
+        DealStatusResponseDto dealStatusResponseDto = new DealStatusResponseDto();
+        dealStatusResponseDto.setMessage("Wrong password: Status.CANCELED");
+
+        Mockito.when(otpPasswordMapper.toModel(requestDto)).thenReturn(otpPassword);
+        Mockito.when(otpPasswordService.passwordValidation(otpPassword)).thenReturn(deal);
+        Mockito.when(dealMapper.toDealStatusDto(deal)).thenReturn(dealStatusResponseDto);
+
+        RestAssuredMockMvc.given()
+                .contentType(ContentType.JSON)
+                .body(requestDto)
+                .when()
+                .post("/deals/validate-otp")
+                .then()
+                .statusCode(200)
+                .body("message", Matchers.equalTo("Wrong password: Status.CANCELED"));
     }
 }

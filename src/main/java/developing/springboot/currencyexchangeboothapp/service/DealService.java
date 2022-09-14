@@ -1,6 +1,6 @@
 package developing.springboot.currencyexchangeboothapp.service;
 
-import developing.springboot.currencyexchangeboothapp.dto.ReportResponse;
+import developing.springboot.currencyexchangeboothapp.dto.response.ReportResponse;
 import developing.springboot.currencyexchangeboothapp.model.Deal;
 import java.time.LocalDate;
 import java.util.List;

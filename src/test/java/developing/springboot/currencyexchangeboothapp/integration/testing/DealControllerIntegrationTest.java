@@ -1,5 +1,7 @@
 package developing.springboot.currencyexchangeboothapp.integration.testing;
 
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.doNothing;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -8,12 +10,13 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonDeserializer;
 import developing.springboot.currencyexchangeboothapp.CurrencyExchangeBoothAppApplication;
-import developing.springboot.currencyexchangeboothapp.dto.BuyAmountResponseDto;
-import developing.springboot.currencyexchangeboothapp.dto.DealStatusResponseDto;
+import developing.springboot.currencyexchangeboothapp.dto.response.BuyAmountResponseDto;
+import developing.springboot.currencyexchangeboothapp.dto.response.DealStatusResponseDto;
 import developing.springboot.currencyexchangeboothapp.model.Status;
 import developing.springboot.currencyexchangeboothapp.repository.DealRepository;
 import developing.springboot.currencyexchangeboothapp.repository.ExchangeRateRepository;
 import developing.springboot.currencyexchangeboothapp.repository.OtpPasswordRepository;
+import developing.springboot.currencyexchangeboothapp.service.SmsSender;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.HashMap;
@@ -24,6 +27,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
@@ -48,6 +52,8 @@ class DealControllerIntegrationTest {
     private ExchangeRateRepository exchangeRateRepository;
     @Autowired
     private OtpPasswordRepository otpPasswordRepository;
+    @MockBean
+    private SmsSender smsSender;
 
     @Test
     @Sql(value = {"/create-exchange-rates-before.sql"},
@@ -55,6 +61,7 @@ class DealControllerIntegrationTest {
     @Sql(value = {"/delete-exchange-rates-after.sql"},
             executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     void expectForCorrectRespondCreatingNewDeal() throws Exception {
+        doNothing().when(smsSender).sendSms(anyString(), anyString());
         Map<String,String> body = new HashMap<>();
         body.put("ccySale", "USD");
         body.put("ccyBuy", "UAH");
@@ -83,6 +90,7 @@ class DealControllerIntegrationTest {
     @Sql(value = {"/delete-exchange-rates-after.sql"},
             executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     void expectForBadRequestBecauseOfPhoneNumberIsNotValid() throws Exception {
+        doNothing().when(smsSender).sendSms(anyString(), anyString());
         Map<String,String> body = new HashMap<>();
         body.put("ccySale", "USD");
         body.put("ccyBuy", "UAH");
@@ -119,7 +127,9 @@ class DealControllerIntegrationTest {
 
         Assertions.assertEquals("Deal confirmed: Status.PERFORMED",
                 dealStatusResponseDto.getMessage());
-        Assertions.assertEquals(Status.PERFORMED, dealRepository.findById(99L).get().getStatus());
+        Assertions.assertEquals(Status.PERFORMED, dealRepository.findById(99L).orElseThrow(() ->
+                new RuntimeException("Cannot get Deal entity by id=99 during testing validateOtp "
+                        + "method from DealController")).getStatus());
         Assertions.assertFalse(otpPasswordRepository.findById(99L).isPresent());
     }
 
@@ -128,7 +138,7 @@ class DealControllerIntegrationTest {
             executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     @Sql(value = {"/delete-deals-after.sql", "/delete-otp-password-after.sql"},
             executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
-    void deleteDealFromDB() throws Exception {
+    void shouldReturnStatusOkAfterDeletingDealFromDbByPhone() throws Exception {
         mockMvc.perform(delete("/deals/delete?phone=+380501234567"))
                 .andExpect(status().isOk());
     }

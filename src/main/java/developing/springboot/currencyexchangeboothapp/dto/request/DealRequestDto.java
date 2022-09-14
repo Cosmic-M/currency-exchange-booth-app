@@ -1,4 +1,4 @@
-package developing.springboot.currencyexchangeboothapp.dto;
+package developing.springboot.currencyexchangeboothapp.dto.request;
 
 import developing.springboot.currencyexchangeboothapp.lib.ValidPhoneNumber;
 import java.math.BigDecimal;

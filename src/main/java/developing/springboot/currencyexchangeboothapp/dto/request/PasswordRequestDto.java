@@ -1,4 +1,4 @@
-package developing.springboot.currencyexchangeboothapp.dto;
+package developing.springboot.currencyexchangeboothapp.dto.request;
 
 import javax.persistence.Column;
 import lombok.EqualsAndHashCode;

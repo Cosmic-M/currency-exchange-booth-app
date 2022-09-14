@@ -1,8 +1,8 @@
 package developing.springboot.currencyexchangeboothapp.controller;
 
-import developing.springboot.currencyexchangeboothapp.dto.DealResponseDto;
-import developing.springboot.currencyexchangeboothapp.dto.ReportResponse;
-import developing.springboot.currencyexchangeboothapp.dto.ReportResponseDto;
+import developing.springboot.currencyexchangeboothapp.dto.response.DealResponseDto;
+import developing.springboot.currencyexchangeboothapp.dto.response.ReportResponse;
+import developing.springboot.currencyexchangeboothapp.dto.response.ReportResponseDto;
 import developing.springboot.currencyexchangeboothapp.model.Deal;
 import developing.springboot.currencyexchangeboothapp.service.DealService;
 import developing.springboot.currencyexchangeboothapp.service.mapper.DealMapper;

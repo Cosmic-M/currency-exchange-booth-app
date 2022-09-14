@@ -33,21 +33,21 @@ class ExchangeRateControllerTest {
     }
 
     @Test
-    void openWorkDay() {
+    void openWorkDay_validDataInput_ok() {
         ExchangeRate usd = new ExchangeRate();
         usd.setId(1L);
         usd.setCcy("USD");
         usd.setBaseCcy("UAH");
-        usd.setBuy(BigDecimal.valueOf(39.4));
-        usd.setSale(BigDecimal.valueOf(39.9));
+        usd.setBuy(BigDecimal.valueOf(39.40000));
+        usd.setSale(BigDecimal.valueOf(39.90000));
         usd.setDateTime(LocalDateTime.now());
 
         ExchangeRate eur = new ExchangeRate();
         eur.setId(2L);
         eur.setCcy("EUR");
         eur.setBaseCcy("UAH");
-        eur.setBuy(BigDecimal.valueOf(39.5));
-        eur.setSale(BigDecimal.valueOf(40.4));
+        eur.setBuy(BigDecimal.valueOf(39.50000));
+        eur.setSale(BigDecimal.valueOf(40.40000));
         eur.setDateTime(LocalDateTime.now());
 
         List<ExchangeRate> mockExchangeRateList = List.of(usd, eur);

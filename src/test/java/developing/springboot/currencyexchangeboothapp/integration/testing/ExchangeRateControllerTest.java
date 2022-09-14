@@ -8,7 +8,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonDeserializer;
 import developing.springboot.currencyexchangeboothapp.CurrencyExchangeBoothAppApplication;
-import developing.springboot.currencyexchangeboothapp.dto.ExchangeRateResponseDto;
+import developing.springboot.currencyexchangeboothapp.dto.response.ExchangeRateResponseDto;
 import developing.springboot.currencyexchangeboothapp.model.ExchangeRate;
 import developing.springboot.currencyexchangeboothapp.repository.ExchangeRateRepository;
 import java.time.LocalDateTime;

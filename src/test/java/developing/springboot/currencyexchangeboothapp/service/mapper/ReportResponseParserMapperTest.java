@@ -1,8 +1,8 @@
 package developing.springboot.currencyexchangeboothapp.service.mapper;
 
 import developing.springboot.currencyexchangeboothapp.dto.Operation;
-import developing.springboot.currencyexchangeboothapp.dto.ReportResponse;
-import developing.springboot.currencyexchangeboothapp.dto.ReportResponseDto;
+import developing.springboot.currencyexchangeboothapp.dto.response.ReportResponse;
+import developing.springboot.currencyexchangeboothapp.dto.response.ReportResponseDto;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

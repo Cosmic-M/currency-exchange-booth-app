@@ -10,7 +10,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonDeserializer;
 import developing.springboot.currencyexchangeboothapp.CurrencyExchangeBoothAppApplication;
 import developing.springboot.currencyexchangeboothapp.dto.Operation;
-import developing.springboot.currencyexchangeboothapp.dto.ReportResponseDto;
+import developing.springboot.currencyexchangeboothapp.dto.response.ReportResponseDto;
 import developing.springboot.currencyexchangeboothapp.model.Deal;
 import developing.springboot.currencyexchangeboothapp.model.Status;
 import java.math.BigDecimal;

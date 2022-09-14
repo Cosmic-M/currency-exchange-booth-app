@@ -1,6 +1,6 @@
 package developing.springboot.currencyexchangeboothapp.controller;
 
-import developing.springboot.currencyexchangeboothapp.dto.ExchangeRateResponseDto;
+import developing.springboot.currencyexchangeboothapp.dto.response.ExchangeRateResponseDto;
 import developing.springboot.currencyexchangeboothapp.model.ExchangeRate;
 import developing.springboot.currencyexchangeboothapp.service.ExchangeRateService;
 import developing.springboot.currencyexchangeboothapp.service.mapper.ExchangeRateMapper;
