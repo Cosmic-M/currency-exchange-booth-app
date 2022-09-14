@@ -30,7 +30,7 @@ public class ReportController {
     private final DealMapper dealMapper;
     private final ReportResponseParserMapper reportResponseParserMapper;
 
-    @ApiOperation(value = "get daily report")
+    @ApiOperation(value = "close work day and get daily report")
     @GetMapping("/report")
     public List<ReportResponseDto> doReport() {
         List<ReportResponse> reportResponseList = dealService.doReport();

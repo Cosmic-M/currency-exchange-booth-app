@@ -4,13 +4,14 @@
 - pull this project<br>
 - follow the link https://console.twilio.com/ and pass registration<br>
 - in your Intellij open src/main/resources/application.properties and assign <br>
-TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN, TWILIO_TRIAL_NUMBER in appropriate variables.<br>
+TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN and TWILIO_TRIAL_NUMBER <br>
+(you have got from console.twilio.com) in appropriate variables. <br>
 - start docker on your local machine<br>
 - open terminal and start command: 'docker build -t exchange-rate-app .' <br>  
 then: 'docker run -ti --rm -e TZ=Europe/Kiev -p 8085:8080 exchange-rate-app' <br>
 - in your browser open http://localhost:8085/swagger-ui/#/ and http://localhost:8085/h2-console <br>
 (JDBC URL: jdbc:h2:mem:currency and User Name: root)<br>
-- I added some scripts for creating tables and filling them with data, so...everything prepared to working<br>
+- I added some scripts for creating tables and filling them with data, so...everything prepared to work<br>
 
 <h3>Project description:</h3>
 Exchange rate app reflects server working part and works in realtime to provide exchange rate<br>
