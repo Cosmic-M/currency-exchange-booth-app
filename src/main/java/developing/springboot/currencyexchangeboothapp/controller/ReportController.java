@@ -43,9 +43,13 @@ public class ReportController {
     @GetMapping("/ccy-period")
     public List<DealResponseDto> getDeals(@RequestParam @ApiParam(
             value = "Please assign currency from 'USD', 'EUR' or 'UAH'") String ccySale,
-                                          @RequestParam @DateTimeFormat(pattern =
+                                          @RequestParam @ApiParam(
+                                                  value = "put valid data format YYYY-MM-DD")
+                                          @DateTimeFormat(pattern =
                                                   DateTimePatternUtil.DATE_PATTERN) LocalDate from,
-                                          @RequestParam @DateTimeFormat(pattern =
+                                          @RequestParam @ApiParam(
+                                                  value = "put valid data format YYYY-MM-DD")
+                                          @DateTimeFormat(pattern =
                                                   DateTimePatternUtil.DATE_PATTERN) LocalDate to,
                                           @RequestParam(defaultValue = "20")
                                           @ApiParam(value = "default value is 20")
