@@ -23,7 +23,7 @@ public interface DealRepository extends JpaRepository<Deal, Long> {
     List<ReportResponse> getDealsPerDay();
 
     @Query("FROM Deal d WHERE d.ccySale = ?1 AND d.dateTime "
-            + "BETWEEN ?2 AND ?3 AND d.status = 'PERFORMED' ORDER BY d.dateTime")
+            + "BETWEEN ?2 AND ?3 AND d.status = 'PERFORMED'")
     List<Deal> findAllByCcyAndPeriod(String ccyBuy,
                                      LocalDateTime from,
                                      LocalDateTime to,
